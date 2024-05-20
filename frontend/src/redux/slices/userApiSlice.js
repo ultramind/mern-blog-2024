@@ -13,3 +13,5 @@ const userApiSlice = apiSlice.injectEndpoints({
     })
   })
 })
+
+export const { useLoginMutation } = userApiSlice
