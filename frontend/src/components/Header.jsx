@@ -57,7 +57,7 @@ const Header = () => {
                     aria-labelledby='dropdownMenuButton'
                   >
                     <a href='#' className='dropdown-item'>
-                      Emeka
+                      Add Post
                     </a>
                     <a href='#' className='dropdown-item'>
                       My Profile
