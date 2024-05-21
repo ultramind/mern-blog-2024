@@ -6,7 +6,7 @@ import generateToken from '../utils/generateToken.js'
 // route POST => /api/users
 // access public
 const userRegistration = asyncHandler(async (req, res) => {
-  const { firstname, lastname, email, password } = req.body
+  const { firstname, lastname, stack, email, password } = req.body
 
   const userExits = await User.findOne({ email })
   if (userExits) {
@@ -14,13 +14,20 @@ const userRegistration = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
 
-  const user = await User.create({ firstname, lastname, email, password })
+  const user = await User.create({
+    firstname,
+    lastname,
+    stack,
+    email,
+    password
+  })
   if (user) {
     await generateToken(user._id, res)
     res.status(201).json({
       _id: user._id,
       firstname: user.firstname,
       lastname: user.lastname,
+      stack: user.stack,
       email: user.email,
       isAdmin: user.isAdmin
     })
@@ -44,6 +51,7 @@ const userAuth = asyncHandler(async (req, res) => {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
+        stack: user.stack,
         isAdmin: user.isAdmin
       })
     } else {
@@ -76,6 +84,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     firstname: req.user.firstname,
     lastname: req.user.lastname,
     email: req.user.email,
+    stack: req.user.stack,
     isAdmin: req.user.isAdmin
   })
 })

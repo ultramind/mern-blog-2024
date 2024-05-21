@@ -15,6 +15,7 @@ const Register = () => {
     firstname: '',
     lastname: '',
     email: '',
+    stack: '',
     password: ''
   })
 
@@ -105,6 +106,24 @@ const Register = () => {
               {errors.email && touched.email ? errors.email : null}
             </span>
           </div>
+          <div className='form-group col-12'>
+            <label htmlFor='author'>Stack</label>
+            <select
+              className='form-control'
+              name='stack'
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.stack}
+            >
+              <option value=''>Select your Stack</option>
+              <option value='UI&UX'>UI & UX</option>
+              <option value='frontend dev'>Frontend Dev</option>
+              <option value='backend dev'>Backend Dev</option>
+              <option value='fullstack dev'>Fullstack Dev</option>
+              <option value='Dev Ops'>Dev Ops</option>
+            </select>
+          </div>
+
           <div className='form-group col-12'>
             <label htmlFor='author'>Password</label>
             <input

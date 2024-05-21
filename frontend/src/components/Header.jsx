@@ -65,7 +65,10 @@ const Header = () => {
                     <a href='#' className='dropdown-item'>
                       My Posts
                     </a>
-                    <span className='dropdown-item' onClick={handleLogout}>
+                    <span
+                      className='dropdown-item cursor-pointer'
+                      onClick={handleLogout}
+                    >
                       Logout
                     </span>
                   </div>
