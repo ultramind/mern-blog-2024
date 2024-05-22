@@ -7,7 +7,6 @@ import asyncHandler from 'express-async-handler'
 // access private
 export const addPost = asyncHandler(async (req, res) => {
   const { title, body } = req.body
-
   const slug = generateSlug(title)
 
   const postExits = await Post.findOne({ slug, category: req.user.stack })

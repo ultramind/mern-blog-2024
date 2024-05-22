@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { PostSchema } from '../utils/validationSchema'
+import { useAddPostMutation } from '../redux/slices/postApiSlice'
+import Loading from '../components/Loading'
+import { toast } from 'react-toastify'
 
 const AddPost = () => {
   const [post, setPost] = useState({
@@ -8,8 +11,26 @@ const AddPost = () => {
     body: ''
   })
 
+  const [file, setFile] = useState()
+
+  const [addPost, { isLoading }] = useAddPostMutation()
+
   const handleAddPost = async values => {
-    console.log(values)
+    let formData = new FormData()
+    formData.append('title', values.title)
+    formData.append('body', values.body)
+    formData.append('image', values.image)
+    try {
+      const res = await addPost(formData).unwrap()
+      toast.success('Post add and to be reviewed within some minutes', {
+        position: 'bottom-center'
+      })
+      resetForm()
+    } catch (err) {
+      toast.error(err?.data?.message || err.message, {
+        position: 'bottom-center'
+      })
+    }
   }
 
   const {
@@ -19,7 +40,8 @@ const AddPost = () => {
     setFieldValue,
     touched,
     errors,
-    values
+    values,
+    resetForm
   } = useFormik({
     initialValues: post,
     validationSchema: PostSchema,
@@ -29,9 +51,12 @@ const AddPost = () => {
   //   console.log(errors)
   return (
     <div className='w-50'>
-      <h3>
-        Add a <span>Post</span>
-      </h3>
+      <div className='d-flex justify-content-between items-center'>
+        <h3 className='mb-4'>
+          Add a<span> Post</span>
+        </h3>
+        {isLoading && <Loading />}
+      </div>
       <form className='row mb-0' onSubmit={handleSubmit}>
         <div className='form-group col-12'>
           <label htmlFor='author'>Title</label>
@@ -103,7 +128,7 @@ const AddPost = () => {
             value='Submit'
             className='button button-large button-black w-100 button-dark text-transform-none fw-medium ls-0 button-rounded m-0'
           >
-            Submit
+            {isLoading ? 'Submitting...' : 'Submit Post'}
           </button>
         </div>
       </form>
