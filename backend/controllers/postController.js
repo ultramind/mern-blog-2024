@@ -45,3 +45,24 @@ export const addPost = asyncHandler(async (req, res) => {
     throw new Error('Could not add new post')
   }
 })
+
+// @desc fot the all posts
+// route GET => /api/posts
+// access public routes
+export const getAllPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find()
+  res.status(200).json(posts)
+})
+
+// @desc fot the single post
+// route GET => /api/posts/slug
+// access public routes
+export const getPost = asyncHandler(async (req, res) => {
+  const { slug } = req.params
+  const post = await Post.findOne({ slug })
+  if (!post) {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+  res.status(200).json(post)
+})

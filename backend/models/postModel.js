@@ -28,6 +28,10 @@ const postSchema = mongoose.Schema(
     comments: {
       type: Array
     },
+    status: {
+      type: String,
+      default: 'pending'
+    },
     imageUrl: {
       type: String
     }
