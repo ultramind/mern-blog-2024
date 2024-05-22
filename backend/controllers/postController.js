@@ -25,7 +25,8 @@ export const addPost = asyncHandler(async (req, res) => {
     title,
     slug,
     category: req.user.stack,
-    body
+    body,
+    imageUrl: req.file.filename
   })
   if (post) {
     res.status(201).json({
@@ -37,7 +38,8 @@ export const addPost = asyncHandler(async (req, res) => {
       title: post.title,
       slug: post.slug,
       category: post.category,
-      body: post.body
+      body: post.body,
+      imageUrl: post.imageUrl
     })
   } else {
     res.status(400)
