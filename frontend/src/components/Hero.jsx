@@ -2,16 +2,13 @@ import React from 'react'
 import { useGetAllPostsQuery } from '../redux/slices/postApiSlice'
 
 const Hero = ({ post }) => {
-  console.log(post)
+  const postBody = post?.body.substr(0, 300)
   return (
     <div className='col-lg-7 mb-5 mb-lg-0'>
       <article className='entry border-bottom-0 mb-0'>
         <div className='entry-image'>
           <a href='demo-blog-single.html'>
-            <img
-              src={`../../../backend/public/uploads/posts/${post?.imgUrl}`}
-              alt='Image 3'
-            />
+            <img src={`${post?.imageUrl}`} alt='Image 3' />
           </a>
         </div>
         <div className='entry-title'>
@@ -35,13 +32,7 @@ const Hero = ({ post }) => {
           </ul>
         </div>
         <div className='entry-content'>
-          <p>
-            Asperiores, tenetur, blanditiis, quaerat odit ex exercitationem
-            pariatur quibusdam veritatis quisquam laboriosam esse beatae hic
-            perferendis. Lorem ipsum dolor sit amet. Rapidiously negotiate
-            standardized web services and goal-oriented outsourcing. Uniquely
-            repurpose compelling functionalities before parallel mindshare.
-          </p>
+          <p>{postBody}...</p>
         </div>
       </article>
     </div>

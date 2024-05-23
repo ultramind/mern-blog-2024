@@ -39,7 +39,7 @@ const Posts = () => {
       <div className='row col-mb-50 posts-md'>
         {isLoading && <PostSkeleton card={9} />}
         {data?.map((post, i) => (
-          <Post key={i} />
+          <Post key={i} post={post} />
         ))}
       </div>
     </div>

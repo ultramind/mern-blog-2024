@@ -10,6 +10,8 @@ import HeroSkeleton from '../components/SkeletonsLoaders/HeroSkeleton'
 
 const Home = () => {
   const { data, isLoading, isError, error } = useGetAllPostsQuery()
+  const newData = data?.slice(0, 4)
+  console.log(newData)
 
   return (
     <section id='content'>
@@ -21,7 +23,7 @@ const Home = () => {
             {data && <Hero post={data[0]} />}
 
             {/* Aside Section */}
-            <Aside />
+            <Aside posts={newData} isLoading={isLoading} />
           </div>
 
           <Subscribe />

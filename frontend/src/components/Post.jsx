@@ -1,38 +1,36 @@
 import React from 'react'
 
-const Post = () => {
+const Post = ({ post }) => {
+  const postBody = post?.body.substr(0, 70)
   return (
     <div className='col-md-4'>
       <article className='entry'>
         <div className='entry-image mb-3'>
           <a href='demo-blog-single.html'>
-            <img src='demos/blog/images/categories/1.jpg' alt='Image 3' />
+            <img src={`${post?.imageUrl}`} alt='Image 3' />
           </a>
         </div>
         <div className='entry-title title-sm'>
           <div className='entry-categories'>
-            <a href='demo-blog-categories.html'>Arts & Culture</a>
+            <a href='demo-blog-categories.html'>{post?.category}</a>
           </div>
           <h3>
             <a
               href='demo-blog-single.html'
               className='color-underline stretched-link'
             >
-              On World Art Day, try out this activity for the whole family
+              {post?.title}
             </a>
           </h3>
         </div>
         <div className='entry-meta'>
           <ul>
-            <li>March 21, 2020</li>
+            <li>{post?.createdAt}</li>
           </ul>
         </div>
         <div className='entry-content mt-3'>
-          <p>
-            Today’s freebie is a set of 60 beautiful multimedia icons designed
-            by Carlotta Govi.
-          </p>
-          <a href='demo-blog-single.html' className='more-link'>
+          <p className='m-0'>{postBody}...</p>
+          <a href='' className='more-link'>
             Read more
           </a>
         </div>

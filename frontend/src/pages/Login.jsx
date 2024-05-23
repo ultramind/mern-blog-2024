@@ -23,7 +23,7 @@ const Login = () => {
       const res = await login(values).unwrap()
       dispatch(setUserCredentials({ ...res }))
       navigate('/')
-      toast.success('Registration Successful', { position: 'bottom-center' })
+      toast.success('Login Successful', { position: 'bottom-center' })
       console.log(res)
     } catch (err) {
       toast.error(err?.data?.message || err.message, {

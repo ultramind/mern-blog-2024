@@ -30,7 +30,7 @@ const postSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      default: 'pending'
+      default: 'published'
     },
     imageUrl: {
       type: String
