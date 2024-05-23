@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { PostSchema } from '../utils/validationSchema'
-import { useAddPostMutation } from '../redux/slices/postApiSlice'
 import Loading from '../components/Loading'
 import { toast } from 'react-toastify'
+import { useAddPostMutation } from '../redux/slices/postApiSlice'
 
 const AddPost = () => {
   const [post, setPost] = useState({

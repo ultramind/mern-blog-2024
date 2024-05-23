@@ -5,6 +5,7 @@ import userRoute from './routes/userRoute.js'
 import postRoute from './routes/postRoute.js'
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 import connectDB from './configs/dbConn.js'
+import cors from 'cors'
 
 const app = express()
 dotenv.config()

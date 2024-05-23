@@ -1,8 +1,8 @@
 import apiSlice from './apiSlice'
 
-const POST_URL = 'api/posts'
+const POST_URL = '/api/posts'
 
-const postSlice = apiSlice.injectEndpoints({
+const postApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     addPost: builder.mutation({
       query: data => ({
@@ -10,8 +10,11 @@ const postSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data
       })
+    }),
+    getAllPosts: builder.query({
+      query: () => `${POST_URL}`
     })
   })
 })
 
-export const { useAddPostMutation } = postSlice
+export const { useAddPostMutation, useGetAllPostsQuery } = postApiSlice

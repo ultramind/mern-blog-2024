@@ -9,6 +9,13 @@ const storage = multer.diskStorage({
   }
 })
 
+const cloudStorage = multer.diskStorage({
+  filename: (req, file, cb) => {
+    return cb(null, `${Date.now()}_${file.originalname}`)
+  }
+})
+
 const upload = multer({ storage })
+export const cloudUpload = multer({ storage: cloudStorage })
 
 export default upload

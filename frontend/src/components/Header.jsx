@@ -59,9 +59,10 @@ const Header = () => {
                     <Link to='/add-post' className='dropdown-item'>
                       Add Post
                     </Link>
-                    <a href='#' className='dropdown-item'>
+                    <Link to='/profile' className='dropdown-item'>
                       My Profile
-                    </a>
+                    </Link>
+
                     <a href='#' className='dropdown-item'>
                       My Posts
                     </a>

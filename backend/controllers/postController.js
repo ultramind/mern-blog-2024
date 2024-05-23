@@ -1,3 +1,4 @@
+import cloudinary from '../configs/cloudinary.js'
 import Post from '../models/postModel.js'
 import { generateSlug } from '../utils/utils.js'
 import asyncHandler from 'express-async-handler'
@@ -15,6 +16,13 @@ export const addPost = asyncHandler(async (req, res) => {
     throw new Error('Kindly change the title of ur post')
   }
 
+  // upload to cloudinary
+  const result = await cloudinary.uploader.upload(req.file.path)
+  if (!result) {
+    res.status(400)
+    throw new Error('Error uploading file')
+  }
+
   const post = await Post.create({
     author: {
       firstname: req.user.firstname,
@@ -25,7 +33,7 @@ export const addPost = asyncHandler(async (req, res) => {
     slug,
     category: req.user.stack,
     body,
-    imageUrl: req.file.filename
+    imageUrl: result.url
   })
   if (post) {
     res.status(201).json({
@@ -50,7 +58,7 @@ export const addPost = asyncHandler(async (req, res) => {
 // route GET => /api/posts
 // access public routes
 export const getAllPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find()
+  const posts = await Post.find().sort({ _id: -1 })
   res.status(200).json(posts)
 })
 
