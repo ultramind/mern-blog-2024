@@ -9,9 +9,14 @@ const commentApiSlice = apiSlice.injectEndpoints({
         url: `${COMMENT_URL}/${postId}/comment`,
         method: 'POST',
         body: data
-      })
+      }),
+      invalidatesTags: ['comment']
+    }),
+    getAllComment: builder.query({
+      query: postId => `${COMMENT_URL}/${postId}/comment`,
+      providesTags: ['comment']
     })
   })
 })
 
-export const { useAddCommentMutation } = commentApiSlice
+export const { useAddCommentMutation, useGetAllCommentQuery } = commentApiSlice

@@ -35,6 +35,7 @@ export const addComment = asyncHandler(async (req, res) => {
 // route GET => /api/posts
 // access public routes
 export const getAllComments = asyncHandler(async (req, res) => {
-  const posts = await Comment.find().sort({ _id: -1 })
-  res.status(200).json(posts)
+  const { postId } = req.params
+  const comments = await Comment.find().sort({ _id: -1 }).limit(3)
+  res.status(200).json(comments)
 })

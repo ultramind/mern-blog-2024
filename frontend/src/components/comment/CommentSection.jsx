@@ -6,12 +6,9 @@ const CommentSection = ({ post }) => {
   return (
     <>
       <div id='comments'>
-        <h3 id='comments-title'>
-          <span>3</span> Comments
-        </h3>
-
+        
         {/* List of comments */}
-        <Comments />
+        <Comments post={post} />
 
         <div className='clear'></div>
 
