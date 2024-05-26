@@ -2,7 +2,7 @@ import React from 'react'
 import Comments from './Comments'
 import AddComment from './AddComment'
 
-const CommentSection = () => {
+const CommentSection = ({ post }) => {
   return (
     <>
       <div id='comments'>
@@ -13,10 +13,10 @@ const CommentSection = () => {
         {/* List of comments */}
         <Comments />
 
-        <div class='clear'></div>
+        <div className='clear'></div>
 
         {/* Add comment */}
-        <AddComment />
+        <AddComment post={post} />
       </div>
     </>
   )

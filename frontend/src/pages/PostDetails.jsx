@@ -3,8 +3,7 @@ import Layout from '../Layout'
 import { useParams } from 'react-router-dom'
 import { useGetPostQuery } from '../redux/slices/postApiSlice'
 import Skeleton from 'react-loading-skeleton'
-import Comment from '../components/comment/Comment'
-import CommentSection from '../components/comment'
+import CommentSection from '../components/comment/CommentSection'
 
 const PostDetails = () => {
   const { slug } = useParams()
@@ -108,7 +107,8 @@ const PostDetails = () => {
                       <br />
                       <div className='line'></div>
                       {/* Comment section */}
-                      <CommentSection />
+                      <CommentSection post={data} />
+
                       <div className='line'></div>
 
                       <h4 className='mb-3'>Related Tags</h4>

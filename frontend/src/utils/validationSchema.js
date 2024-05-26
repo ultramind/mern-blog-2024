@@ -29,3 +29,9 @@ export const RegisterSchema = Yup.object().shape({
     'Passwords must match'
   )
 })
+
+// register schema
+export const CommentSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  comment: Yup.string().required('Comment required')
+})

@@ -2,16 +2,16 @@ import React from 'react'
 
 const Comments = () => {
   return (
-    <ol class='commentlist'>
-      <li class='comment even thread-even depth-1' id='li-comment-1'>
-        <div id='comment-1' class='comment-wrap'>
-          <div class='comment-meta'>
-            <div class='comment-author vcard'>
-              <span class='comment-avatar'>
+    <ol className='commentlist'>
+      <li className='comment even thread-even depth-1' id='li-comment-1'>
+        <div id='comment-1' className='comment-wrap'>
+          <div className='comment-meta'>
+            <div className='comment-author vcard'>
+              <span className='comment-avatar'>
                 <img
                   alt=''
                   src='https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=60'
-                  class='avatar avatar-60 photo avatar-default'
+                  className='avatar avatar-60 photo avatar-default'
                   height='60'
                   width='60'
                 />
@@ -19,8 +19,8 @@ const Comments = () => {
             </div>
           </div>
 
-          <div class='comment-content'>
-            <div class='comment-author'>
+          <div className='comment-content'>
+            <div className='comment-author'>
               John Doe
               <span>
                 <a href='#' title='Permalink to this comment'>
@@ -35,27 +35,27 @@ const Comments = () => {
               posuere erat a ante venenatis dapibus posuere velit aliquet.
             </p>
 
-            <a class='comment-reply-link' href='#'>
-              <i class='bi-reply-fill'></i>
+            <a className='comment-reply-link' href='#'>
+              <i className='bi-reply-fill'></i>
             </a>
           </div>
 
-          <div class='clear'></div>
+          <div className='clear'></div>
         </div>
 
-        <ul class='children'>
+        <ul className='children'>
           <li
-            class='comment byuser comment-author-_smcl_admin odd alt depth-2'
+            className='comment byuser comment-author-_smcl_admin odd alt depth-2'
             id='li-comment-3'
           >
-            <div id='comment-3' class='comment-wrap'>
-              <div class='comment-meta'>
-                <div class='comment-author vcard'>
-                  <span class='comment-avatar'>
+            <div id='comment-3' className='comment-wrap'>
+              <div className='comment-meta'>
+                <div className='comment-author vcard'>
+                  <span className='comment-avatar'>
                     <img
                       alt=''
                       src='https://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=40&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D40&amp;r=G'
-                      class='avatar avatar-40 photo'
+                      className='avatar avatar-40 photo'
                       height='40'
                       width='40'
                     />
@@ -63,9 +63,9 @@ const Comments = () => {
                 </div>
               </div>
 
-              <div class='comment-content'>
-                <div class='comment-author'>
-                  <a href='#' rel='external nofollow' class='url'>
+              <div className='comment-content'>
+                <div className='comment-author'>
+                  <a href='#' rel='external nofollow' className='url'>
                     SemiColon
                   </a>
                   <span>
@@ -77,29 +77,29 @@ const Comments = () => {
 
                 <p>Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 
-                <a class='comment-reply-link' href='#'>
-                  <i class='bi-reply-fill'></i>
+                <a className='comment-reply-link' href='#'>
+                  <i className='bi-reply-fill'></i>
                 </a>
               </div>
 
-              <div class='clear'></div>
+              <div className='clear'></div>
             </div>
           </li>
         </ul>
       </li>
 
       <li
-        class='comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1'
+        className='comment byuser comment-author-_smcl_admin even thread-odd thread-alt depth-1'
         id='li-comment-2'
       >
-        <div id='comment-2' class='comment-wrap'>
-          <div class='comment-meta'>
-            <div class='comment-author vcard'>
-              <span class='comment-avatar'>
+        <div id='comment-2' className='comment-wrap'>
+          <div className='comment-meta'>
+            <div className='comment-author vcard'>
+              <span className='comment-avatar'>
                 <img
                   alt=''
                   src='https://1.gravatar.com/avatar/30110f1f3a4238c619bcceb10f4c4484?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G'
-                  class='avatar avatar-60 photo'
+                  className='avatar avatar-60 photo'
                   height='60'
                   width='60'
                 />
@@ -107,12 +107,12 @@ const Comments = () => {
             </div>
           </div>
 
-          <div class='comment-content'>
-            <div class='comment-author'>
+          <div className='comment-content'>
+            <div className='comment-author'>
               <a
                 href='https://themeforest.net/user/semicolonweb'
                 rel='external nofollow'
-                class='url'
+                className='url'
               >
                 SemiColon
               </a>
@@ -128,12 +128,12 @@ const Comments = () => {
               aliquet.
             </p>
 
-            <a class='comment-reply-link' href='#'>
-              <i class='bi-reply-fill'></i>
+            <a className='comment-reply-link' href='#'>
+              <i className='bi-reply-fill'></i>
             </a>
           </div>
 
-          <div class='clear'></div>
+          <div className='clear'></div>
         </div>
       </li>
     </ol>
