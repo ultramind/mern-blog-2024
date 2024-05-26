@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import userRoute from './routes/userRoute.js'
 import postRoute from './routes/postRoute.js'
+import commentRoute from './routes/commentRoute.js'
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 import connectDB from './configs/dbConn.js'
 import cors from 'cors'
@@ -21,6 +22,7 @@ connectDB()
 //route middleware
 app.use('/api/users', userRoute)
 app.use('/api/posts', postRoute)
+app.use('/api/post', commentRoute)
 
 // root app route
 app.get('/', (req, res) => {
