@@ -5,8 +5,8 @@ import Loading from '../Loading'
 import PostSkeleton from '../SkeletonsLoaders/PostSkeleton'
 import HeroSkeleton from '../SkeletonsLoaders/HeroSkeleton'
 
-const Posts = () => {
-  const { data, isLoading, isError, error } = useGetAllPostsQuery()
+const Posts = ({ posts, isLoading }) => {
+  // const { data, isLoading, isError, error } = useGetAllPostsQuery()
 
   return (
     <div className='col-lg-9'>
@@ -38,7 +38,7 @@ const Posts = () => {
       </div>
       <div className='row col-mb-50 posts-md'>
         {isLoading && <PostSkeleton card={9} />}
-        {data?.map((post, i) => (
+        {posts?.map((post, i) => (
           <Post key={i} post={post} />
         ))}
       </div>

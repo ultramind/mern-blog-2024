@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const PostCard = ({ post }) => {
   return (
@@ -12,15 +13,12 @@ const PostCard = ({ post }) => {
         <div className='col-md-8'>
           <div className='entry-title title-xs'>
             <div className='entry-categories'>
-              <a href='demo-blog-categories.html'>{post?.category}</a>
+              <Link to={`/posts/category/${post?.category}`}>
+                {post?.category}
+              </Link>
             </div>
             <h3>
-              <a
-                href='demo-blog-single.html'
-                className='stretched-link color-underline'
-              >
-                {post?.title}
-              </a>
+              <Link to={`/post/${post?.slug}`}>{post?.title}</Link>
             </h3>
           </div>
           <div className='entry-meta'>

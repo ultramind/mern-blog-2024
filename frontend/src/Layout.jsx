@@ -8,10 +8,14 @@ const Layout = ({ children }) => {
       {/* header */}
       <Header />
       <section id='content'>
-        <div className='content-wrap pt-5' style={{ overflow: 'visible' }}>
-          <div className='container d-flex justify-content-center'>
-            {children}
-          </div>
+        <div
+          className='content-wrap'
+          style={{
+            overflow: 'visible',
+            padding: '0px'
+          }}
+        >
+          <div className='d-flex justify-content-center'>{children}</div>
         </div>
       </section>
       <Footer />

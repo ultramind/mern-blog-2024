@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Post = ({ post }) => {
   const postBody = post?.body.substr(0, 70)
@@ -6,17 +7,19 @@ const Post = ({ post }) => {
     <div className='col-md-4'>
       <article className='entry'>
         <div className='entry-image mb-3'>
-          <a href='demo-blog-single.html'>
+          <Link to={`/post/${post?.slug}`}>
             <img src={`${post?.imageUrl}`} alt='Image 3' />
-          </a>
+          </Link>
         </div>
         <div className='entry-title title-sm'>
           <div className='entry-categories'>
-            <a href='demo-blog-categories.html'>{post?.category}</a>
+            <Link to={`/posts/category/${post?.category}`}>
+              {post?.category}
+            </Link>
           </div>
           <h3>
             <a
-              href='demo-blog-single.html'
+              to={`/post/${post?.slug}`}
               className='color-underline stretched-link'
             >
               {post?.title}
@@ -30,9 +33,9 @@ const Post = ({ post }) => {
         </div>
         <div className='entry-content mt-3'>
           <p className='m-0'>{postBody}...</p>
-          <a href='' className='more-link'>
+          <Link to={`/post/${post?.slug}`} className='more-link'>
             Read more
-          </a>
+          </Link>
         </div>
       </article>
     </div>

@@ -11,7 +11,6 @@ import HeroSkeleton from '../components/SkeletonsLoaders/HeroSkeleton'
 const Home = () => {
   const { data, isLoading, isError, error } = useGetAllPostsQuery()
   const newData = data?.slice(0, 4)
-  console.log(newData)
 
   return (
     <section id='content'>
@@ -34,7 +33,7 @@ const Home = () => {
             {/* category list */}
             <CategoryList />
             {/* All posts */}
-            <Posts />
+            <Posts posts={data} isLoading={isLoading} />
           </div>
         </div>
       </div>

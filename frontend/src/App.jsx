@@ -7,7 +7,8 @@ import AddPost from './pages/AddPost'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import PostDetails from './pages/PostDetails'
+import PostByCategory from './pages/PostByCategory'
 
 const App = () => {
   return (
@@ -22,6 +23,9 @@ const App = () => {
       />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/post/:slug' element={<PostDetails />} />
+      ;<Route path='/posts/category/:category' element={<PostByCategory />} />
+      {/* Protected route */}
       <Route
         path='/add-post'
         element={

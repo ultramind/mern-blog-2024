@@ -74,3 +74,16 @@ export const getPost = asyncHandler(async (req, res) => {
   }
   res.status(200).json(post)
 })
+
+// @desc fot the single post
+// route GET => /api/posts/category/
+// access public routes
+export const getPostsByCategory = asyncHandler(async (req, res) => {
+  const { category } = req.params
+  const posts = await Post.find({ category })
+  if (!posts) {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+  res.status(200).json(posts)
+})

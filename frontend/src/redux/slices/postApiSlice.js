@@ -13,8 +13,19 @@ const postApiSlice = apiSlice.injectEndpoints({
     }),
     getAllPosts: builder.query({
       query: () => `${POST_URL}`
+    }),
+    getPost: builder.query({
+      query: slug => `${POST_URL}/${slug}`
+    }),
+    getPostsByCategory: builder.query({
+      query: category => `${POST_URL}/category/${category}`
     })
   })
 })
 
-export const { useAddPostMutation, useGetAllPostsQuery } = postApiSlice
+export const {
+  useAddPostMutation,
+  useGetAllPostsQuery,
+  useGetPostQuery,
+  useGetPostsByCategoryQuery
+} = postApiSlice
