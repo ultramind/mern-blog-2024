@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler'
 import Comment from '../models/commentModel.js'
 import Post from '../models/postModel.js'
 
-// @desc for the post add
+// @desc for the adding comment
 // route POST => /api/post
 // access public
 export const addComment = asyncHandler(async (req, res) => {
@@ -31,11 +31,42 @@ export const addComment = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc fot the all posts
-// route GET => /api/posts
+// @desc fot the all comment
+// route GET => /api/post/:postId/comment
 // access public routes
 export const getAllComments = asyncHandler(async (req, res) => {
   const { postId } = req.params
   const comments = await Comment.find().sort({ _id: -1 }).limit(3)
   res.status(200).json(comments)
+})
+
+// @desc for the adding reply to comment
+// route POST => /api/post/:commentId/ comment
+// access public
+export const replyComment = asyncHandler(async (req, res) => {
+  const { commentId } = req.params
+  const { name, comment } = req.body
+
+  const reply = { name, commentId, reply: comment }
+
+  const commentExist = await Comment.findById(commentId)
+  if (!commentExist) {
+    res.status(400)
+    throw new Error('Comment does not exist')
+  }
+
+  const newComment = await Comment.findOneAndUpdate(
+    { _id: commentId },
+    { $push: { replies: reply } },
+    { new: true }
+  )
+  if (newComment) {
+    res.status(201).json({
+      message: 'Comment replied successful',
+      newComment
+    })
+  } else {
+    res.status(400)
+    throw new Error('Could not add new comment')
+  }
 })
