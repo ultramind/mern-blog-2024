@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import userRoute from './routes/userRoute.js'
 import postRoute from './routes/postRoute.js'
 import commentRoute from './routes/commentRoute.js'
+import categoryRoute from './routes/categoryRoute.js'
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 import connectDB from './configs/dbConn.js'
 import cors from 'cors'
@@ -23,6 +24,7 @@ connectDB()
 app.use('/api/users', userRoute)
 app.use('/api/posts', postRoute)
 app.use('/api/post', commentRoute)
+app.use('/api/category', categoryRoute)
 
 // root app route
 app.get('/', (req, res) => {
