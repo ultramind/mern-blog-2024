@@ -18,7 +18,6 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation()
 
   const handleLoginSubmit = async values => {
-    console.log(values)
     try {
       const res = await login(values).unwrap()
       dispatch(setUserCredentials({ ...res }))
@@ -29,7 +28,6 @@ const Login = () => {
       toast.error(err?.data?.message || err.message, {
         position: 'bottom-center'
       })
-      console.log(err)
     }
   }
   const {

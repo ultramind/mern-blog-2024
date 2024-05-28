@@ -5,6 +5,7 @@ import Comment from './Comment'
 
 const Comments = ({ post }) => {
   const { data: comments, isLoading } = useGetAllCommentQuery(post?._id)
+
   return (
     <>
       <div className='d-flex justify-content-between items-center'>

@@ -36,7 +36,12 @@ export const addComment = asyncHandler(async (req, res) => {
 // access public routes
 export const getAllComments = asyncHandler(async (req, res) => {
   const { postId } = req.params
-  const comments = await Comment.find().sort({ _id: -1 }).limit(3)
+  const comments = await Comment.find({ postId }).sort({ _id: -1 }).limit(3)
+
+  // let replies = comments.map(c => {
+  //   return c?.replies?.length > 0 ? c?.replies?.reverse() : []
+  // })
+  // const newComments = [...comments, replies]
   res.status(200).json(comments)
 })
 

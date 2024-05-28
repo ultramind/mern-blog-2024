@@ -12,7 +12,7 @@ const postApiSlice = apiSlice.injectEndpoints({
       })
     }),
     getAllPosts: builder.query({
-      query: () => `${POST_URL}`
+      query: page => `${POST_URL}?page=${page}`
     }),
     getPost: builder.query({
       query: slug => `${POST_URL}/${slug}`

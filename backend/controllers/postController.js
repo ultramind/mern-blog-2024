@@ -3,6 +3,9 @@ import Post from '../models/postModel.js'
 import { generateSlug } from '../utils/utils.js'
 import asyncHandler from 'express-async-handler'
 
+const PAGE = 1
+const LIMIT_PAGE = 9
+
 // @desc for the post add
 // route POST => /api/posts
 // access private
@@ -58,7 +61,9 @@ export const addPost = asyncHandler(async (req, res) => {
 // route GET => /api/posts
 // access public routes
 export const getAllPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find().sort({ _id: -1 })
+  const page = Number(req.query.page) || PAGE
+  const skip = (page - 1) * LIMIT_PAGE
+  const posts = await Post.find().sort({ _id: -1 }).skip(skip).limit(LIMIT_PAGE)
   res.status(200).json(posts)
 })
 

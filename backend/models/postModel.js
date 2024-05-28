@@ -32,6 +32,10 @@ const postSchema = mongoose.Schema(
       type: String,
       default: 'published'
     },
+    featured: {
+      type: String,
+      default: false
+    },
     imageUrl: {
       type: String
     }

@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
+import AddReply from './AddReply'
+import Reply from './Reply'
 
 const Comment = ({ comment }) => {
+  const [replyModal, setReplyModal] = useState(false)
+
+  const toggleReplyModal = () => {
+    setReplyModal(prev => !prev)
+  }
   return (
     <>
       <li className='comment even thread-even depth-1' id='li-comment-1'>
@@ -19,7 +26,7 @@ const Comment = ({ comment }) => {
             </div>
           </div>
 
-          <div className='comment-content'>
+          <div className='comment-content mb-2'>
             <div className='comment-author'>
               {comment?.name}
               <span>
@@ -31,16 +38,28 @@ const Comment = ({ comment }) => {
 
             <p>{comment?.comment}</p>
 
-            <a className='comment-reply-link' href='#'>
+            <span
+              className='comment-reply-link cursor-pointer'
+              onClick={toggleReplyModal}
+            >
               <i className='bi-reply-fill'></i>
-            </a>
+            </span>
           </div>
 
-          <div className='clear'></div>
+          {replyModal ? (
+            <AddReply
+              commentId={comment?._id}
+              toggleReplyModal={toggleReplyModal}
+              replyModal={replyModal}
+            />
+          ) : null}
         </div>
-
         {/* REPLY */}
-        <ul className='children'></ul>
+        <ul className='children'>
+          {comment?.replies.map((reply, i) => (
+            <Reply key={i} reply={reply} />
+          ))}
+        </ul>
       </li>
     </>
   )

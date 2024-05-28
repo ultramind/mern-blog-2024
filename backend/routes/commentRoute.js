@@ -8,6 +8,6 @@ const router = express.Router()
 
 router.post('/:postId/comment', addComment)
 router.get('/:postId/comment', getAllComments)
-router.put('/:commentId/comment', replyComment)
+router.put('/:commentId/reply', replyComment)
 
 export default router

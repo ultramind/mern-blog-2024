@@ -4,7 +4,7 @@ const PostCardSkeleton = ({ card }) => {
   return Array(card)
     .fill(0)
     .map((c, i) => (
-      <article className='entry col-12'>
+      <article key={i} className='entry col-12'>
         <div className='grid-inner row gutter-10'>
           <div className='col-md-4'>
             <Skeleton style={{ height: '100px' }} />

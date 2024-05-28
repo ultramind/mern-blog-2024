@@ -109,7 +109,7 @@ const PostDetails = () => {
                       {/* Comment section */}
                       <CommentSection post={data} />
 
-                      <div className='line'></div>
+                      <div className='line my-6'></div>
 
                       <h4 className='mb-3'>Related Tags</h4>
                       <div className='tagcloud'>

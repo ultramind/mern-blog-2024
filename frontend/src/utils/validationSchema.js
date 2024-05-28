@@ -30,8 +30,19 @@ export const RegisterSchema = Yup.object().shape({
   )
 })
 
-// register schema
+// comment schema
 export const CommentSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   comment: Yup.string().required('Comment required')
+})
+
+// reply schema
+export const ReplySchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  reply: Yup.string().required('reply required')
+})
+
+// add category schema
+export const CategorySchema = Yup.object().shape({
+  category: Yup.string().required('Category is required')
 })

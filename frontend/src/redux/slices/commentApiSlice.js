@@ -15,8 +15,20 @@ const commentApiSlice = apiSlice.injectEndpoints({
     getAllComment: builder.query({
       query: postId => `${COMMENT_URL}/${postId}/comment`,
       providesTags: ['comment']
+    }),
+    addReply: builder.mutation({
+      query: ({ commentId, data }) => ({
+        url: `${COMMENT_URL}/${commentId}/reply`,
+        method: 'PUT',
+        body: data
+      }),
+      invalidatesTags: ['comment']
     })
   })
 })
 
-export const { useAddCommentMutation, useGetAllCommentQuery } = commentApiSlice
+export const {
+  useAddCommentMutation,
+  useGetAllCommentQuery,
+  useAddReplyMutation
+} = commentApiSlice

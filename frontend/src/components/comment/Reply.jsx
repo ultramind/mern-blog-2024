@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Reply = () => {
+const Reply = ({ reply }) => {
   return (
     <li
       className='comment byuser comment-author-_smcl_admin odd alt depth-2'
@@ -24,19 +24,19 @@ const Reply = () => {
         <div className='comment-content'>
           <div className='comment-author'>
             <a href='#' rel='external nofollow' className='url'>
-              SemiColon
+              {reply?.name}
             </a>
             <span>
               <a href='#' title='Permalink to this comment'>
-                April 25, 2012 at 1:03 am
+                {reply?.createdAt}
               </a>
             </span>
           </div>
 
-          <p>Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          <p>{reply?.reply}</p>
 
           <a className='comment-reply-link' href='#'>
-            <i className='bi-reply-fill'></i>
+            <i className='bi-trash-fill'></i>
           </a>
         </div>
 

@@ -9,7 +9,7 @@ const Aside = ({ posts, isLoading }) => {
 
       <div className='row posts-md col-mb-30'>
         {isLoading && <PostCardSkeleton card={4} />}
-        {posts && posts?.map((post, i) => <PostCard post={post} />)}
+        {posts && posts?.map((post, i) => <PostCard key={i} post={post} />)}
       </div>
     </div>
   )

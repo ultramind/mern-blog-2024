@@ -2,8 +2,8 @@ import React from 'react'
 import Layout from '../Layout'
 import { useGetPostsByCategoryQuery } from '../redux/slices/postApiSlice'
 import { useParams } from 'react-router-dom'
-import CategoryList from '../components/container/CategoryList'
-import Posts from '../components/container/Posts'
+import Posts from '../components/postContainer/Posts'
+import CategoryList from '../components/postContainer/CategoryList'
 
 const PostByCategory = () => {
   const { category } = useParams()
