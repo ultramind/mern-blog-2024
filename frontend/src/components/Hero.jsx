@@ -30,7 +30,7 @@ const Hero = ({ post }) => {
         <div className='entry-meta'>
           <ul>
             <li>
-              <a href='#'>{post.createdAt}</a>
+              <a href='#'>{post?.createdAt}</a>
             </li>
           </ul>
         </div>
