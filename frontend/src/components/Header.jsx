@@ -59,13 +59,14 @@ const Header = () => {
                     <Link to='/add-post' className='dropdown-item'>
                       Add Post
                     </Link>
+                    <Link to='/posts' className='dropdown-item'>
+                      My Posts
+                    </Link>
+
                     <Link to='/profile' className='dropdown-item'>
                       My Profile
                     </Link>
 
-                    <a href='#' className='dropdown-item'>
-                      My Posts
-                    </a>
                     <span
                       className='dropdown-item cursor-pointer'
                       onClick={handleLogout}

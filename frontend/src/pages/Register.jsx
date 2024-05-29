@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { setUserCredentials } from '../redux/slices/authSlice'
 import { toast } from 'react-toastify'
 import Loading from '../components/Loading'
+import { useGetAllCategoriesQuery } from '../redux/slices/categoryApiSlice'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -18,6 +19,8 @@ const Register = () => {
     stack: '',
     password: ''
   })
+
+  const { data: categories } = useGetAllCategoriesQuery()
 
   const [register, { isLoading }] = useRegisterMutation()
 
@@ -116,11 +119,11 @@ const Register = () => {
               value={values.stack}
             >
               <option value=''>Select your Stack</option>
-              <option value='UI&UX'>UI & UX</option>
-              <option value='frontend dev'>Frontend Dev</option>
-              <option value='backend dev'>Backend Dev</option>
-              <option value='fullstack dev'>Fullstack Dev</option>
-              <option value='Dev Ops'>Dev Ops</option>
+              {categories?.map((cat, i) => (
+                <option value={cat.category} key={i}>
+                  {cat.category}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -136,6 +139,7 @@ const Register = () => {
               tabIndex='1'
               className='form-control'
               placeholder='Password'
+              autoComplete='true'
             />
             <span className='text-danger'>
               {errors.password && touched.password ? errors.password : null}
@@ -152,7 +156,8 @@ const Register = () => {
               size='22'
               tabIndex='1'
               className='form-control'
-              placeholder='Confrim Password'
+              placeholder='Confirm Password'
+              autoComplete='true'
             />
             <span className='text-danger'>
               {errors.confirmPassword && touched.confirmPassword

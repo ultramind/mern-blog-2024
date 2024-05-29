@@ -9,10 +9,12 @@ import Profile from './pages/Profile'
 import 'react-loading-skeleton/dist/skeleton.css'
 import PostDetails from './pages/PostDetails'
 import PostByCategory from './pages/PostByCategory'
+import ProtectedRoute from './utils/ProtectedRoute'
 
 const App = () => {
   return (
     <Routes>
+      {/* Public Route */}
       <Route
         path='/'
         element={
@@ -24,24 +26,27 @@ const App = () => {
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/post/:slug' element={<PostDetails />} />
-      ;<Route path='/posts/category/:category' element={<PostByCategory />} />
+      <Route path='/posts/category/:category' element={<PostByCategory />} />
+      <Route path='/posts' element={<PostByCategory />} />
       {/* Protected route */}
-      <Route
-        path='/add-post'
-        element={
-          <Layout>
-            <AddPost />
-          </Layout>
-        }
-      />
-      <Route
-        path='/profile'
-        element={
-          <Layout>
-            <Profile />
-          </Layout>
-        }
-      />
+      <Route element={<ProtectedRoute />}>
+        <Route
+          path='/add-post'
+          element={
+            <Layout>
+              <AddPost />
+            </Layout>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <Layout>
+              <Profile />
+            </Layout>
+          }
+        />
+      </Route>
     </Routes>
   )
 }

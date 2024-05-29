@@ -94,6 +94,7 @@ const Login = () => {
               tabIndex='1'
               className='form-control'
               placeholder='Password'
+              autoComplete='true'
             />
             <span className='text-danger'>
               {errors.password && touched.password ? errors.password : null}
