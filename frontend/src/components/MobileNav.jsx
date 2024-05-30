@@ -18,7 +18,7 @@ const MobileNav = () => {
             {categories?.map((cat, i) => (
               <li className='menu-item' key={i}>
                 <Link
-                  to={`posts?category=${cat?.category}`}
+                  to={`posts/category/${cat?.category}`}
                   className='menu-link'
                   href='demo-blog-categories.html'
                 >

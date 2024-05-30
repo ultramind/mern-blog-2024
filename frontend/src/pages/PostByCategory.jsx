@@ -5,22 +5,29 @@ import Subscribe from '../components/Subscribe'
 import Posts from '../components/postContainer/Posts'
 import CategoryList from '../components/postContainer/CategoryList'
 import Skeleton from 'react-loading-skeleton'
-import { useGetAllPostsQuery } from '../redux/slices/postApiSlice'
+import {
+  useGetAllPostsQuery,
+  useGetPostsByCategoryQuery
+} from '../redux/slices/postApiSlice'
 import HeroSkeleton from '../components/SkeletonsLoaders/HeroSkeleton'
 import Layout from '../Layout'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 const PostByCategory = () => {
   const [page, setPage] = useState(1)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const category = searchParams.get('category')
-  const search = searchParams.get('search')
-  console.log('Queries', category, search)
+  const [category, setCategory] = useState('all')
 
-  const { data, isLoading, isError, error } = useGetAllPostsQuery(page)
-  const newData = data?.slice(0, 4)
+  const {
+    data: posts,
+    isLoading,
+    isError,
+    error
+  } = useGetPostsByCategoryQuery(category, page)
 
-  // useEffect(() => {}, [page])
+  console.log(posts)
+  // const posts = []
+  // const isLoading = false
+  console.log('category', category)
 
   return (
     <Layout>
@@ -39,12 +46,12 @@ const PostByCategory = () => {
             <div className='container'>
               <div className='row border-between'>
                 {/* category list */}
-                <CategoryList />
+                <CategoryList category={category} setCategory={setCategory} />
                 {/* All posts */}
                 <Posts
                   page={page}
                   setPage={setPage}
-                  posts={data}
+                  posts={posts}
                   isLoading={isLoading}
                 />
               </div>

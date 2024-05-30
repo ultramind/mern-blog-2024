@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
-import { useFormik } from 'formik'
+import { replace, useFormik } from 'formik'
 import { CategorySchema } from '../../utils/validationSchema'
 import { useSelector } from 'react-redux'
 import AddCategory from '../AddCategory'
 import Skeleton from 'react-loading-skeleton'
 import { useGetAllCategoriesQuery } from '../../redux/slices/categoryApiSlice'
-import { Link } from 'react-router-dom'
 
-const CategoryList = () => {
+const CategoryList = ({ category, setCategory }) => {
   const { userInfo } = useSelector(state => state.auth)
   const { data: categories, isLoading } = useGetAllCategoriesQuery()
+
+  //fetch by category
+  const filterPosts = data => {
+    setCategory(data)
+  }
+
   return (
     <div
       className='col-lg-3 cat-widgets position-sticky h-100'
@@ -27,13 +32,13 @@ const CategoryList = () => {
           </li>
           {categories?.map((cat, i) => (
             <li className='nav-item' key={i}>
-              <Link
-                to={`posts?category=${cat?.category}`}
-                className='nav-link'
+              <span
+                onClick={() => setCategory(cat.category)}
+                className='nav-link cursor-pointer'
                 href='#'
               >
                 {cat.category || <Skeleton />}
-              </Link>
+              </span>
             </li>
           ))}
         </ul>

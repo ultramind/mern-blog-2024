@@ -26,8 +26,8 @@ const App = () => {
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/post/:slug' element={<PostDetails />} />
-      <Route path='/posts/category/:category' element={<PostByCategory />} />
-      <Route path='/posts' element={<PostByCategory />} />
+      <Route path='/posts/category' element={<PostByCategory />} />
+      {/* <Route path='/posts' element={<PostByCategory />} /> */}
       {/* Protected route */}
       <Route element={<ProtectedRoute />}>
         <Route
