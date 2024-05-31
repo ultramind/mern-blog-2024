@@ -5,10 +5,7 @@ import Subscribe from '../components/Subscribe'
 import Posts from '../components/postContainer/Posts'
 import CategoryList from '../components/postContainer/CategoryList'
 import Skeleton from 'react-loading-skeleton'
-import {
-  useGetAllPostsQuery,
-  useGetPostsByCategoryQuery
-} from '../redux/slices/postApiSlice'
+import { useGetAllPostsQuery } from '../redux/slices/postApiSlice'
 import HeroSkeleton from '../components/SkeletonsLoaders/HeroSkeleton'
 import Layout from '../Layout'
 import { useParams, useSearchParams } from 'react-router-dom'
@@ -16,18 +13,6 @@ import { useParams, useSearchParams } from 'react-router-dom'
 const PostByCategory = () => {
   const [page, setPage] = useState(1)
   const [category, setCategory] = useState('all')
-
-  const {
-    data: posts,
-    isLoading,
-    isError,
-    error
-  } = useGetPostsByCategoryQuery(category, page)
-
-  console.log(posts)
-  // const posts = []
-  // const isLoading = false
-  console.log('category', category)
 
   return (
     <Layout>
@@ -48,12 +33,6 @@ const PostByCategory = () => {
                 {/* category list */}
                 <CategoryList category={category} setCategory={setCategory} />
                 {/* All posts */}
-                <Posts
-                  page={page}
-                  setPage={setPage}
-                  posts={posts}
-                  isLoading={isLoading}
-                />
               </div>
             </div>
           </div>

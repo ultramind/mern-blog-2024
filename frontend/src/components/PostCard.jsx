@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const PostCard = ({ post }) => {
   return (
-    <article className='entry col-12' key={i}>
+    <article className='entry col-12'>
       <div className='grid-inner row gutter-20'>
         <div className='col-md-4'>
           <a className='entry-image' href='demo-blog-single.html'>

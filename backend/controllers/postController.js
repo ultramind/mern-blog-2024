@@ -118,7 +118,7 @@ export const getPostsByFilter = asyncHandler(async (req, res) => {
   let categoryText = req.query.category || ''
   const categories = await Category.find()
   if (categoryText !== '') {
-    query.category = categoryText
+    query.category = { $regex: categoryText, $options: 'i' }
   }
   const sort = req.query.sort || 'desc'
   const skip = (page - 1) * LIMIT_PAGE
@@ -143,7 +143,7 @@ export const getPostsByFilter = asyncHandler(async (req, res) => {
     currentPage: page,
     totalDocument,
     limit,
-    data: posts
+    posts
   }
 
   res.status(200).json(response)

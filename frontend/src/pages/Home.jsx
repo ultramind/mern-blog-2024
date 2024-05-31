@@ -9,11 +9,15 @@ import { useGetAllPostsQuery } from '../redux/slices/postApiSlice'
 import HeroSkeleton from '../components/SkeletonsLoaders/HeroSkeleton'
 
 const Home = () => {
-  const [page, setPage] = useState(1)
-  const { data, isLoading, isError, error } = useGetAllPostsQuery(page)
-  const newData = data?.slice(0, 4)
-
-  // useEffect(() => {}, [page])
+  const [query, setQuery] = useState({
+    category: '',
+    search: '',
+    page: 1,
+    limit: 10,
+    sort: 'desc'
+  })
+  const { data, isLoading, isSuccess } = useGetAllPostsQuery(query)
+  const newPosts = data?.posts?.slice(0, 4)
 
   return (
     <section id='content'>
@@ -22,10 +26,10 @@ const Home = () => {
           <div className='row border-between'>
             {/* Hero section */}
             {isLoading && <HeroSkeleton />}
-            {data && <Hero post={data[0]} />}
+            {data && <Hero post={data?.posts[0]} />}
 
             {/* Aside Section */}
-            <Aside posts={newData} isLoading={isLoading} />
+            <Aside posts={newPosts} isLoading={isLoading} />
           </div>
 
           <Subscribe />
@@ -34,13 +38,17 @@ const Home = () => {
         <div className='container'>
           <div className='row border-between'>
             {/* category list */}
-            <CategoryList />
+            <CategoryList
+              isLoading={isLoading}
+              query={query}
+              setQuery={setQuery}
+            />
             {/* All posts */}
             <Posts
-              page={page}
-              setPage={setPage}
-              posts={data}
+              posts={data?.posts}
               isLoading={isLoading}
+              query={query}
+              setQuery={setQuery}
             />
           </div>
         </div>

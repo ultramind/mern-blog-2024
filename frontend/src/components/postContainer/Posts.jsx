@@ -5,7 +5,7 @@ import Loading from '../Loading'
 import PostSkeleton from '../SkeletonsLoaders/PostSkeleton'
 import HeroSkeleton from '../SkeletonsLoaders/HeroSkeleton'
 
-const Posts = ({ posts, isLoading, page, setPage }) => {
+const Posts = ({ posts, isLoading, page, setPage, query, setQuery }) => {
   // const { data, isLoading, isError, error } = useGetAllPostsQuery()
 
   return (
@@ -26,12 +26,24 @@ const Posts = ({ posts, isLoading, page, setPage }) => {
               Most Popular
             </button>
             <div className='dropdown-menu'>
-              <a className='dropdown-item' href='#'>
+              <span
+                className='dropdown-item'
+                onClick={() => setQuery({ ...query, sort: 'desc' })}
+              >
                 Latest Posts
-              </a>
-              <a className='dropdown-item' href='#'>
-                Most Comments
-              </a>
+              </span>
+              <span
+                className='dropdown-item'
+                onClick={() => setQuery({ ...query, sort: 'asc' })}
+              >
+                Old Posts
+              </span>
+              <span
+                className='dropdown-item'
+                onClick={() => setQuery({ ...query, limit: 3 })}
+              >
+                Get by 3
+              </span>
             </div>
           </div>
         </div>

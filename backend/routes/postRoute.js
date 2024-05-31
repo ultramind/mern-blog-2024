@@ -12,8 +12,8 @@ const router = express.Router()
 
 router.post('/', protectRoute, cloudUpload.single('image'), addPost)
 // router.get('/', getAllPosts)
-// router.get('/:slug', getPost)
 router.get('/query', getPostsByFilter)
 router.get('/category/:category', getPostsByCategory)
+router.get('/:slug', getPost)
 
 export default router

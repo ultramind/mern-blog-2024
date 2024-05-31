@@ -69,6 +69,7 @@ const AddCategory = () => {
       <span className='text-danger mt-0'>
         {errors.category && touched.category ? errors.category : null}
       </span>
+      <hr />
     </div>
   )
 }

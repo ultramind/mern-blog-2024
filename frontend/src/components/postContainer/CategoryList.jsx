@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux'
 import AddCategory from '../AddCategory'
 import Skeleton from 'react-loading-skeleton'
 import { useGetAllCategoriesQuery } from '../../redux/slices/categoryApiSlice'
+import SearchPost from '../SearchPost'
 
-const CategoryList = ({ category, setCategory }) => {
+const CategoryList = ({ query, setQuery, isLoading: postLoading }) => {
   const { userInfo } = useSelector(state => state.auth)
   const { data: categories, isLoading } = useGetAllCategoriesQuery()
 
@@ -23,19 +24,35 @@ const CategoryList = ({ category, setCategory }) => {
       {/* categories section */}
       {userInfo?.isAdmin === true && <AddCategory />}
 
+      {userInfo && (
+        <SearchPost query={query} setQuery={setQuery} isLoading={postLoading} />
+      )}
+
       <div className='widget widget-nav mt-md-5'>
         <ul className='nav'>
-          <li className='nav-item active'>
-            <a className='nav-link' href='#'>
+          <li className={`nav-item ${query.category == '' && 'active'}`}>
+            <span
+              className='nav-link'
+              style={{ cursor: 'pointer' }}
+              onClick={() => setQuery({ ...query, category: '' })}
+            >
               All Categories
-            </a>
+            </span>
           </li>
           {categories?.map((cat, i) => (
-            <li className='nav-item' key={i}>
+            <li
+              className={`nav-item ${
+                query.category == cat.category && 'active'
+              }`}
+              key={i}
+            >
               <span
-                onClick={() => setCategory(cat.category)}
-                className='nav-link cursor-pointer'
+                onClick={() =>
+                  setQuery({ ...query, category: cat?.category, search: '' })
+                }
+                className='nav-link'
                 href='#'
+                style={{ cursor: 'pointer' }}
               >
                 {cat.category || <Skeleton />}
               </span>
