@@ -4,16 +4,17 @@ import {
   getAllPosts,
   getPost,
   getPostsByCategory,
-  getPostsByFilter
+  getPostsByFilter,
+  likePost
 } from '../controllers/postController.js'
 import protectRoute from '../middlewares/protect.js'
-import upload, { cloudUpload } from '../middlewares/uploadFile.js'
 const router = express.Router()
 
-router.post('/', protectRoute, cloudUpload.single('image'), addPost)
+router.post('/', protectRoute, addPost)
 // router.get('/', getAllPosts)
 router.get('/query', getPostsByFilter)
+router.put('/like', protectRoute, likePost)
 router.get('/category/:category', getPostsByCategory)
-router.get('/:slug', getPost)
+router.get('/:slug', protectRoute, getPost)
 
 export default router

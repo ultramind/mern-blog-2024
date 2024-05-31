@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
 const postSchema = mongoose.Schema(
   {
@@ -24,7 +24,10 @@ const postSchema = mongoose.Schema(
       type: String,
       require: true
     },
-    numOfLikes: Number,
+    stat: {
+      numOfLikes: [{ type: Schema.Types.ObjectId }],
+      numOfViews: Number
+    },
     comments: {
       type: Array
     },

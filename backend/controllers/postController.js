@@ -12,6 +12,10 @@ const LIMIT_PAGE = 9
 // access private
 export const addPost = asyncHandler(async (req, res) => {
   const { title, body } = req.body
+  if (title == '' || body == '') {
+    res.status(400)
+    throw new Error('Kindly change the title of ur post')
+  }
   const slug = generateSlug(title)
 
   const postExits = await Post.findOne({ slug, category: req.user.stack })
@@ -21,10 +25,14 @@ export const addPost = asyncHandler(async (req, res) => {
   }
 
   // upload to cloudinary
-  const result = await cloudinary.uploader.upload(req.file.path)
-  if (!result) {
-    res.status(400)
-    throw new Error('Error uploading file')
+  // const result = await cloudinary.uploader.upload(req.file.path)
+  // if (!result) {
+  //   res.status(400)
+  //   throw new Error('Error uploading file')
+  // }
+
+  const result = {
+    url: 'https://source.coveo.com/images/illustration-full.png'
   }
 
   const userStack = req.user.stack.toLowerCase()
@@ -147,4 +155,34 @@ export const getPostsByFilter = asyncHandler(async (req, res) => {
   }
 
   res.status(200).json(response)
+})
+
+export const likePost = asyncHandler(async (req, res) => {
+  const { postId } = req.body
+  const post = await Post.findOne({ _id: postId })
+  if (!post) {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+  const hasLiked = post.stat.numOfLikes.includes(req.user._id)
+  let updatedPost
+  if (hasLiked) {
+    updatedPost = await Post.findOneAndUpdate(
+      { _id: postId },
+      {
+        $pull: { 'stat.numOfLikes': req.user._id }
+      },
+      { new: true }
+    )
+  } else {
+    updatedPost = await Post.findOneAndUpdate(
+      { _id: postId },
+      {
+        $push: { 'stat.numOfLikes': req.user._id }
+      },
+      { new: true }
+    )
+  }
+
+  res.status(200).json(updatedPost)
 })

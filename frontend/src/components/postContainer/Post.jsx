@@ -6,11 +6,6 @@ const Post = ({ post }) => {
   return (
     <div className='col-md-4'>
       <article className='entry'>
-        <div className='entry-image mb-3'>
-          <Link to={`/post/${post?.slug}`}>
-            <img src={`${post?.imageUrl}`} alt='Image 3' />
-          </Link>
-        </div>
         <div className='entry-title title-sm'>
           <div className='entry-categories'>
             <Link to={`/posts/category/${post?.category}`}>
@@ -33,7 +28,7 @@ const Post = ({ post }) => {
         </div>
         <div className='entry-content mt-3'>
           <p className='m-0'>{postBody}...</p>
-          <Link to={`/post/${post?.slug}`} className='more-link'>
+          <Link to={`/post/${post?.slug}`} className='more-link mt-2'>
             Read more
           </Link>
         </div>

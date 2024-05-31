@@ -27,7 +27,7 @@ const SearchPost = ({ query, setQuery, isLoading }) => {
           value={search}
           placeholder='Search post ...'
         />
-        {loading ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <button
