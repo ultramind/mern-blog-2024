@@ -10,6 +10,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import PostDetails from './pages/PostDetails'
 import PostByCategory from './pages/PostByCategory'
 import ProtectedRoute from './utils/ProtectedRoute'
+import EditPost from './pages/EditPost'
 
 const App = () => {
   return (
@@ -35,6 +36,14 @@ const App = () => {
           element={
             <Layout>
               <AddPost />
+            </Layout>
+          }
+        />
+        <Route
+          path='/post/:slug/edit'
+          element={
+            <Layout>
+              <EditPost />
             </Layout>
           }
         />

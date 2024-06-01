@@ -3,13 +3,20 @@ import { useFormik } from 'formik'
 import { PostSchema } from '../utils/validationSchema'
 import Loading from '../components/Loading'
 import { toast } from 'react-toastify'
-import { useAddPostMutation } from '../redux/slices/postApiSlice'
+import {
+  useAddPostMutation,
+  useGetPostQuery
+} from '../redux/slices/postApiSlice'
 import JoditEditor from 'jodit-react'
+import { useParams } from 'react-router-dom'
 
-const AddPost = () => {
-  const [content, setContent] = useState('')
+const EditPost = () => {
+  const { slug } = useParams()
+  const { data, isLoading: loading } = useGetPostQuery(slug)
+
+  const [content, setContent] = useState(data?.body || '')
   const [post, setPost] = useState({
-    title: '',
+    title: data?.title || '',
     body: null
   })
 
@@ -19,7 +26,7 @@ const AddPost = () => {
 
   const [addPost, { isLoading }] = useAddPostMutation()
 
-  const handleAddPost = async values => {
+  const handleEditPost = async values => {
     const postData = { ...values, body: content }
     console.log(postData)
     if (postData.body === null) {
@@ -55,7 +62,7 @@ const AddPost = () => {
   } = useFormik({
     initialValues: post,
     validationSchema: PostSchema,
-    onSubmit: handleAddPost
+    onSubmit: handleEditPost
   })
 
   console.log(errors)
@@ -64,7 +71,7 @@ const AddPost = () => {
     <div className='w-50'>
       <div className='d-flex justify-content-between items-center'>
         <h3 className='mb-4'>
-          Add a<span> Post</span>
+          Edit a<span> Post</span>
         </h3>
         {isLoading && <Loading />}
       </div>
@@ -95,25 +102,6 @@ const AddPost = () => {
           />
         </div>
 
-        <div className='w-100'></div>
-        {/* <div className='form-group col-12'>
-          <label htmlFor='comment'>Body</label>
-          <textarea
-            name='body'
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.body}
-            cols='58'
-            rows='7'
-            tabIndex='4'
-            className='form-control'
-            placeholder='Post Body'
-          ></textarea>
-          <span className='text-danger'>
-            {errors.body && touched.body ? errors.body : null}
-          </span>
-        </div> */}
-
         <div className='form-group col-12 mt-4 mb-0'>
           <button
             name='submit'
@@ -123,7 +111,7 @@ const AddPost = () => {
             value='Submit'
             className='button button-large button-black w-100 button-dark text-transform-none fw-medium ls-0 button-rounded m-0'
           >
-            {isLoading ? 'Submitting...' : 'Submit Post'}
+            {isLoading ? 'Updating...' : 'Update Post'}
           </button>
         </div>
       </form>
@@ -131,4 +119,4 @@ const AddPost = () => {
   )
 }
 
-export default AddPost
+export default EditPost

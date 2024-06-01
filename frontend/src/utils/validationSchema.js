@@ -10,8 +10,7 @@ export const LoginSchema = Yup.object().shape({
 })
 
 export const PostSchema = Yup.object().shape({
-  title: Yup.string().required('Title is required'),
-  body: Yup.string().required('Body Is required')
+  title: Yup.string().required('Title is required')
 })
 
 // register schema

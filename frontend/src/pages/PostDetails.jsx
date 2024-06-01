@@ -1,9 +1,16 @@
 import React from 'react'
 import Layout from '../Layout'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useGetPostQuery } from '../redux/slices/postApiSlice'
 import Skeleton from 'react-loading-skeleton'
 import CommentSection from '../components/comment/CommentSection'
+// icons
+import { FaRegHeart } from 'react-icons/fa6'
+import { FaRegEdit } from 'react-icons/fa'
+import { AiFillLike, AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
+import { FaEye } from 'react-icons/fa'
+import { MdDelete } from 'react-icons/md'
+import PostBody from '../components/postContainer/PostBody'
 
 const PostDetails = () => {
   const { slug } = useParams()
@@ -38,6 +45,40 @@ const PostDetails = () => {
                           {data?.author.firstname || <Skeleton />}{' '}
                           {data?.author.lastname}
                         </a>
+                      </li>
+                    </ul>
+                    {/* CTA actions */}
+                    <hr />
+                    <ul>
+                      <li className='d-flex justify-content-center align-items-center gap-2'>
+                        <FaRegHeart size={25} style={{ cursor: 'pointer' }} />
+                        <span>45</span>
+                      </li>
+                      <li className='d-flex justify-content-center align-items-center gap-2'>
+                        <AiOutlineLike
+                          size={25}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <span>45</span>
+                      </li>
+                      <li className='d-flex justify-content-center align-items-center gap-2'>
+                        <AiOutlineDislike
+                          size={25}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <span>45</span>
+                      </li>
+                      <li className='d-flex justify-content-center align-items-center gap-2'>
+                        <FaEye size={25} style={{ cursor: 'pointer' }} />
+                        <span>45</span>
+                      </li>
+                      <li className='d-flex justify-content-center align-items-center gap-2'>
+                        <Link to={`/post/${data?.slug}/edit`}>
+                          <FaRegEdit size={25} style={{ cursor: 'pointer' }} />
+                        </Link>
+                      </li>
+                      <li className='d-flex justify-content-center align-items-center gap-2'>
+                        <MdDelete size={25} style={{ cursor: 'pointer' }} />
                       </li>
                     </ul>
                   </div>
@@ -103,7 +144,8 @@ const PostDetails = () => {
                     <div className='col-lg-1'></div>
 
                     <div className='text-content col-lg-6'>
-                      <p>{data?.body || <Skeleton />}</p>
+                      <PostBody postBody={data?.body} />
+
                       <br />
                       <div className='line'></div>
                       {/* Comment section */}

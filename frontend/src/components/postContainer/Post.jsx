@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PostBody from './PostBody'
 
 const Post = ({ post }) => {
-  const postBody = post?.body.substr(0, 70)
+  const body = post?.body.substr(0, 70)
   return (
     <div className='col-md-4'>
       <article className='entry'>
@@ -27,7 +28,8 @@ const Post = ({ post }) => {
           </ul>
         </div>
         <div className='entry-content mt-3'>
-          <p className='m-0'>{postBody}...</p>
+          {/* <p className='m-0'>{body}...</p> */}
+          <PostBody postBody={post?.body} />
           <Link to={`/post/${post?.slug}`} className='more-link mt-2'>
             Read more
           </Link>

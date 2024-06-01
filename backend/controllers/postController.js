@@ -12,9 +12,9 @@ const LIMIT_PAGE = 9
 // access private
 export const addPost = asyncHandler(async (req, res) => {
   const { title, body } = req.body
-  if (title == '' || body == '') {
+  if (title === '' || body === '') {
     res.status(400)
-    throw new Error('Kindly change the title of ur post')
+    throw new Error('Title and Body is required', title)
   }
   const slug = generateSlug(title)
 
