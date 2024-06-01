@@ -186,3 +186,27 @@ export const likePost = asyncHandler(async (req, res) => {
 
   res.status(200).json(updatedPost)
 })
+
+export const editPost = asyncHandler(async (req, res) => {
+  const { postId } = req.params
+  const { title, body } = req.body
+  const post = await Post.findOne({ _id: postId })
+  if (!post) {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+  if (post.author.id === req.user._id) {
+    res.status(404)
+    throw new Error('Verify post owner failed')
+  }
+
+  const updatedPost = await Post.findOneAndUpdate(
+    { _id: postId },
+    {
+      title,
+      body
+    },
+    { new: true }
+  )
+  res.status(200).json(updatedPost)
+})
