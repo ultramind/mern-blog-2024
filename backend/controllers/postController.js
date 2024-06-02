@@ -189,7 +189,6 @@ export const likePost = asyncHandler(async (req, res) => {
 
 export const editPost = asyncHandler(async (req, res) => {
   const { postId } = req.params
-  console.log(postId)
 
   const { title, body, id } = req.body
 
@@ -215,4 +214,21 @@ export const editPost = asyncHandler(async (req, res) => {
     { new: true }
   )
   res.status(200).json(updatedPost)
+})
+
+export const deletePost = asyncHandler(async (req, res) => {
+  const { postId } = req.params
+
+  const post = await Post.findOne({ _id: postId })
+  if (!post) {
+    res.status(404)
+    throw new Error('Post to be deleted not found')
+  }
+  if (post.author.id === req.user._id) {
+    res.status(404)
+    throw new Error('Verify post owner failed')
+  }
+
+  const deletedPost = await Post.deleteOne({ _id: postId })
+  res.status(200).json(deletedPost)
 })

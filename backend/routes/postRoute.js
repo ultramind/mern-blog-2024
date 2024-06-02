@@ -1,6 +1,7 @@
 import express from 'express'
 import {
   addPost,
+  deletePost,
   editPost,
   getAllPosts,
   getPost,
@@ -18,5 +19,6 @@ router.put('/like', protectRoute, likePost)
 router.get('/category/:category', getPostsByCategory)
 router.get('/:slug', protectRoute, getPost)
 router.put('/:postId/edit', protectRoute, editPost)
+router.delete('/:postId/delete', protectRoute, deletePost)
 
 export default router
