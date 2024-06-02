@@ -29,6 +29,7 @@ const EditPost = () => {
 
   const handleEditPost = async values => {
     const postData = { ...values, body: content, id: data._id }
+    console.log(postData)
     if (postData.body === null) {
       toast.error('Title and body is required', {
         position: 'bottom-center'

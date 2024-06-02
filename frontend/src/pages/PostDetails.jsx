@@ -1,7 +1,10 @@
 import React from 'react'
 import Layout from '../Layout'
-import { Link, useParams } from 'react-router-dom'
-import { useGetPostQuery } from '../redux/slices/postApiSlice'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import {
+  useDeletePostMutation,
+  useGetPostQuery
+} from '../redux/slices/postApiSlice'
 import Skeleton from 'react-loading-skeleton'
 import CommentSection from '../components/comment/CommentSection'
 // icons
@@ -11,10 +14,28 @@ import { AiFillLike, AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import { FaEye } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 import PostBody from '../components/postContainer/PostBody'
+import { toast } from 'react-toastify'
+import Loading from '../components/Loading'
 
 const PostDetails = () => {
+  const navigate = useNavigate()
   const { slug } = useParams()
   const { data, isLoading } = useGetPostQuery(slug)
+
+  const [deletePost, { isLoading: loading }] = useDeletePostMutation()
+
+  const handlePostDelete = async () => {
+    try {
+      const res = await deletePost(data?._id)
+      toast.success('Post deleted successful', { position: 'bottom-center' })
+      navigate('/')
+    } catch (err) {
+      toast.error(err?.data?.message || err.message, {
+        position: 'bottom-center'
+      })
+    }
+  }
+
   return (
     <Layout>
       <section id='content'>
@@ -78,7 +99,14 @@ const PostDetails = () => {
                         </Link>
                       </li>
                       <li className='d-flex justify-content-center align-items-center gap-2'>
-                        <MdDelete size={25} style={{ cursor: 'pointer' }} />
+                        <MdDelete
+                          size={25}
+                          style={{ cursor: 'pointer' }}
+                          onClick={handlePostDelete}
+                        />
+                      </li>
+                      <li className='d-flex justify-content-center align-items-center gap-2'>
+                        {loading && <Loading />}
                       </li>
                     </ul>
                   </div>
