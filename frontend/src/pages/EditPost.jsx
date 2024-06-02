@@ -4,15 +4,16 @@ import { PostSchema } from '../utils/validationSchema'
 import Loading from '../components/Loading'
 import { toast } from 'react-toastify'
 import {
-  useAddPostMutation,
+  useEditPostMutation,
   useGetPostQuery
 } from '../redux/slices/postApiSlice'
 import JoditEditor from 'jodit-react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const EditPost = () => {
   const { slug } = useParams()
   const { data, isLoading: loading } = useGetPostQuery(slug)
+  const navigate = useNavigate()
 
   const [content, setContent] = useState(data?.body || '')
   const [post, setPost] = useState({
@@ -24,11 +25,10 @@ const EditPost = () => {
 
   const [file, setFile] = useState()
 
-  const [addPost, { isLoading }] = useAddPostMutation()
+  const [editPost, { isLoading }] = useEditPostMutation()
 
   const handleEditPost = async values => {
-    const postData = { ...values, body: content }
-    console.log(postData)
+    const postData = { ...values, body: content, id: data._id }
     if (postData.body === null) {
       toast.error('Title and body is required', {
         position: 'bottom-center'
@@ -36,13 +36,14 @@ const EditPost = () => {
       return
     } else {
       try {
-        const res = await addPost(postData).unwrap()
-        toast.success('Post added successfully', {
+        const res = await editPost(postData).unwrap()
+        toast.success('Post updated successfully', {
           position: 'bottom-center'
         })
-        resetForm()
-        setContent('')
+        console.log(res)
+        navigate(`/post/${res?.slug}`)
       } catch (err) {
+        console.log(err)
         toast.error(err?.data?.message || err.message, {
           position: 'bottom-center'
         })
@@ -65,15 +66,13 @@ const EditPost = () => {
     onSubmit: handleEditPost
   })
 
-  console.log(errors)
-
   return (
     <div className='w-50'>
       <div className='d-flex justify-content-between items-center'>
         <h3 className='mb-4'>
           Edit a<span> Post</span>
         </h3>
-        {isLoading && <Loading />}
+        {(isLoading || loading) && <Loading />}
       </div>
       <form className='row mb-0' onSubmit={handleSubmit}>
         <div className='form-group col-12'>

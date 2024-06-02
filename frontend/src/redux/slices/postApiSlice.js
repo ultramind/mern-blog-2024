@@ -17,9 +17,20 @@ const postApiSlice = apiSlice.injectEndpoints({
     }),
     getPost: builder.query({
       query: slug => `${POST_URL}/${slug}`
+    }),
+    editPost: builder.mutation({
+      query: data => ({
+        url: `${POST_URL}/${data.id}/edit`,
+        method: 'PUT',
+        body: data
+      })
     })
   })
 })
 
-export const { useAddPostMutation, useGetAllPostsQuery, useGetPostQuery } =
-  postApiSlice
+export const {
+  useAddPostMutation,
+  useGetAllPostsQuery,
+  useGetPostQuery,
+  useEditPostMutation
+} = postApiSlice

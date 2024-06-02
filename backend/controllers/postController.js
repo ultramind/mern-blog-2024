@@ -189,21 +189,27 @@ export const likePost = asyncHandler(async (req, res) => {
 
 export const editPost = asyncHandler(async (req, res) => {
   const { postId } = req.params
-  const { title, body } = req.body
+  console.log(postId)
+
+  const { title, body, id } = req.body
+
   const post = await Post.findOne({ _id: postId })
   if (!post) {
     res.status(404)
-    throw new Error('Post not found')
+    throw new Error('Post to be edited not found')
   }
   if (post.author.id === req.user._id) {
     res.status(404)
     throw new Error('Verify post owner failed')
   }
 
+  const slug = generateSlug(title)
+
   const updatedPost = await Post.findOneAndUpdate(
     { _id: postId },
     {
       title,
+      slug,
       body
     },
     { new: true }
