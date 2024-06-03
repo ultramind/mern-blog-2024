@@ -88,7 +88,25 @@ export const getPost = asyncHandler(async (req, res) => {
     res.status(404)
     throw new Error('Post not found single')
   }
-  res.status(200).json(post)
+
+  const user = req.user || null
+  let updatedPost
+  if (user) {
+    const hasViewed = post.stat.viewers.includes(user._id)
+    if (!hasViewed) {
+      post.stat.viewers.push(user._id)
+      post.stat.numOfViews = post?.stat?.numOfViews + 1
+      updatedPost = await post.save()
+    } else {
+      post.stat.numOfViews = post?.stat?.numOfViews + 1
+      updatedPost = await post.save()
+    }
+  } else {
+    post.stat.numOfViews = post?.stat?.numOfViews + 1
+    updatedPost = await post.save()
+  }
+
+  res.status(200).json(updatedPost)
 })
 
 // @desc fot the single post
