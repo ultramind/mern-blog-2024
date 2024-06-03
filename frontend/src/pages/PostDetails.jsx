@@ -3,10 +3,13 @@ import Layout from '../Layout'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   useDeletePostMutation,
-  useGetPostQuery
+  useGetPostQuery,
+  useLikePostMutation
 } from '../redux/slices/postApiSlice'
 import Skeleton from 'react-loading-skeleton'
 import CommentSection from '../components/comment/CommentSection'
+import { useSelector } from 'react-redux'
+
 // icons
 import { FaRegHeart } from 'react-icons/fa6'
 import { FaRegEdit } from 'react-icons/fa'
@@ -16,13 +19,17 @@ import { MdDelete } from 'react-icons/md'
 import PostBody from '../components/postContainer/PostBody'
 import { toast } from 'react-toastify'
 import Loading from '../components/Loading'
+import { FaShareAlt } from 'react-icons/fa'
+import { FcLike } from 'react-icons/fc'
 
 const PostDetails = () => {
+  const { userInfo } = useSelector(state => state.auth)
   const navigate = useNavigate()
   const { slug } = useParams()
   const { data, isLoading } = useGetPostQuery(slug)
 
   const [deletePost, { isLoading: loading }] = useDeletePostMutation()
+  const [likePost, { isLoading: likeLoading }] = useLikePostMutation()
 
   const handlePostDelete = async () => {
     try {
@@ -34,6 +41,24 @@ const PostDetails = () => {
         position: 'bottom-center'
       })
     }
+  }
+
+  const handlePostLike = async () => {
+    if (!userInfo) {
+      navigate('/login')
+      return
+    }
+    try {
+      const res = await likePost(data?._id).unwrap()
+    } catch (err) {
+      toast.error(err?.data?.message || err.message, {
+        position: 'bottom-center'
+      })
+    }
+  }
+  let hasUserLiked
+  if (userInfo) {
+    hasUserLiked = data?.stat?.numOfLikes.includes(userInfo._id)
   }
 
   return (
@@ -72,41 +97,62 @@ const PostDetails = () => {
                     <hr />
                     <ul>
                       <li className='d-flex justify-content-center align-items-center gap-2'>
-                        <FaRegHeart size={25} style={{ cursor: 'pointer' }} />
-                        <span>45</span>
+                        {!hasUserLiked && (
+                          <FaRegHeart size={25} style={{ cursor: 'pointer' }} />
+                        )}
+                        {hasUserLiked && <FcLike size={25} />}
                       </li>
                       <li className='d-flex justify-content-center align-items-center gap-2'>
-                        <AiOutlineLike
-                          size={25}
-                          style={{ cursor: 'pointer' }}
-                        />
-                        <span>45</span>
+                        {!hasUserLiked && (
+                          <AiOutlineLike
+                            size={25}
+                            style={{ cursor: 'pointer' }}
+                            onClick={handlePostLike}
+                          />
+                        )}
+                        {hasUserLiked && (
+                          <AiFillLike
+                            size={25}
+                            style={{ cursor: 'pointer' }}
+                            onClick={handlePostLike}
+                          />
+                        )}
+
+                        <span>{data?.stat?.numOfLikes.length}</span>
                       </li>
-                      <li className='d-flex justify-content-center align-items-center gap-2'>
-                        <AiOutlineDislike
-                          size={25}
-                          style={{ cursor: 'pointer' }}
-                        />
-                        <span>45</span>
-                      </li>
+
                       <li className='d-flex justify-content-center align-items-center gap-2'>
                         <FaEye size={25} style={{ cursor: 'pointer' }} />
                         <span>45</span>
                       </li>
                       <li className='d-flex justify-content-center align-items-center gap-2'>
-                        <Link to={`/post/${data?.slug}/edit`}>
-                          <FaRegEdit size={25} style={{ cursor: 'pointer' }} />
+                        <Link to={`/`}>
+                          <FaShareAlt size={25} style={{ cursor: 'pointer' }} />
                         </Link>
                       </li>
+                      {userInfo && userInfo._id === data?.author?.id && (
+                        <>
+                          <li className='d-flex justify-content-center align-items-center gap-2'>
+                            <Link to={`/post/${data?.slug}/edit`}>
+                              <FaRegEdit
+                                size={25}
+                                style={{ cursor: 'pointer' }}
+                              />
+                            </Link>
+                          </li>
+
+                          <li className='d-flex justify-content-center align-items-center gap-2'>
+                            <MdDelete
+                              size={25}
+                              style={{ cursor: 'pointer' }}
+                              onClick={handlePostDelete}
+                            />
+                          </li>
+                        </>
+                      )}
+
                       <li className='d-flex justify-content-center align-items-center gap-2'>
-                        <MdDelete
-                          size={25}
-                          style={{ cursor: 'pointer' }}
-                          onClick={handlePostDelete}
-                        />
-                      </li>
-                      <li className='d-flex justify-content-center align-items-center gap-2'>
-                        {loading && <Loading />}
+                        {loading || (likeLoading && <Loading />)}
                       </li>
                     </ul>
                   </div>

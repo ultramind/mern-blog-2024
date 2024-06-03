@@ -15,10 +15,11 @@ const router = express.Router()
 router.post('/', protectRoute, addPost)
 // router.get('/', getAllPosts)
 router.get('/query', getPostsByFilter)
-router.put('/like', protectRoute, likePost)
+
 router.get('/category/:category', getPostsByCategory)
-router.get('/:slug', protectRoute, getPost)
+router.get('/:slug', getPost)
 router.put('/:postId/edit', protectRoute, editPost)
+router.put('/:postId/like', protectRoute, likePost)
 router.delete('/:postId/delete', protectRoute, deletePost)
 
 export default router

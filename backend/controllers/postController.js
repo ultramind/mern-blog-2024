@@ -158,7 +158,7 @@ export const getPostsByFilter = asyncHandler(async (req, res) => {
 })
 
 export const likePost = asyncHandler(async (req, res) => {
-  const { postId } = req.body
+  const { postId } = req.params
   const post = await Post.findOne({ _id: postId })
   if (!post) {
     res.status(404)

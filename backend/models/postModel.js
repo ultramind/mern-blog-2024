@@ -26,6 +26,7 @@ const postSchema = mongoose.Schema(
     },
     stat: {
       numOfLikes: [{ type: Schema.Types.ObjectId }],
+      viewers: [{ type: Schema.Types.ObjectId }],
       numOfViews: Number
     },
     comments: {
