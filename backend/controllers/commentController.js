@@ -50,9 +50,12 @@ export const getAllComments = asyncHandler(async (req, res) => {
 // access public
 export const replyComment = asyncHandler(async (req, res) => {
   const { commentId } = req.params
-  const { name, comment } = req.body
+  const { comment } = req.body
 
-  const reply = { name, commentId, reply: comment }
+  const reply = {
+    author: { id: req.user._id, name: req.user.firstname },
+    reply: comment
+  }
 
   const commentExist = await Comment.findById(commentId)
   if (!commentExist) {
@@ -74,4 +77,19 @@ export const replyComment = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Could not add new comment')
   }
+})
+
+export const deleteReply = asyncHandler(async (req, res) => {
+  const { commentId, replyId } = req.params
+
+  const comment = await Comment.findOne({ _id: commentId })
+  if (!comment) {
+    res.status(404)
+    throw new Error('comment not found ooh')
+  }
+
+  comment.replies = comment.replies.filter(r => r._id != replyId)
+  const updateComment = await comment.save()
+
+  res.status(200).json({ message: 'Reply removed', updateComment })
 })

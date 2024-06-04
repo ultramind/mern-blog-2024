@@ -11,8 +11,7 @@ const optionalAuth = expressAsyncHandler(async (req, res, next) => {
       req.user = await User.findById(decoded.userId).select('-password')
       next()
     } catch (error) {
-      res.status(404)
-      throw new Error(`${error.message}`)
+      next()
     }
   } else {
     next()

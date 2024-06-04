@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from '../Layout'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   useDeletePostMutation,
+  useGetAllPostsQuery,
   useGetPostQuery,
   useLikePostMutation
 } from '../redux/slices/postApiSlice'
@@ -21,12 +22,28 @@ import { toast } from 'react-toastify'
 import Loading from '../components/Loading'
 import { FaShareAlt } from 'react-icons/fa'
 import { FcLike } from 'react-icons/fc'
+import Posts from '../components/postContainer/Posts'
 
 const PostDetails = () => {
   const { userInfo } = useSelector(state => state.auth)
   const navigate = useNavigate()
   const { slug } = useParams()
   const { data, isLoading } = useGetPostQuery(slug)
+
+  const [query, setQuery] = useState({
+    category: data?.category,
+    search: '',
+    page: 1,
+    limit: 4,
+    sort: 'desc'
+  })
+  // fetch related posts
+  const {
+    data: relatedPosts,
+    isLoading: relatedLoad,
+    isSuccess
+  } = useGetAllPostsQuery(query)
+  console.log(query)
 
   const [deletePost, { isLoading: loading }] = useDeletePostMutation()
   const [likePost, { isLoading: likeLoading }] = useLikePostMutation()
@@ -123,7 +140,7 @@ const PostDetails = () => {
 
                       <li className='d-flex justify-content-center align-items-center gap-2'>
                         <FaEye size={25} style={{ cursor: 'pointer' }} />
-                        <span>45</span>
+                        <span>{data?.stat.numOfViews}</span>
                       </li>
                       <li className='d-flex justify-content-center align-items-center gap-2'>
                         <Link to={`/`}>
@@ -241,127 +258,41 @@ const PostDetails = () => {
                   </div>
                 </div>
               </div>
-
-              <h3 className='mb-0'>Related Posts</h3>
-
-              <div className='row posts-md'>
-                <div className='col-lg-3 col-sm-6'>
-                  <article className='entry'>
-                    <div className='entry-image'>
-                      <a href='#'>
-                        <img
-                          src='demos/blog/images/video-thumbs/1.jpg'
-                          alt='Image 3'
-                        />
-                      </a>
-                    </div>
-                    <div className='entry-title title-sm text-start'>
-                      <div className='entry-categories'>
-                        <a href='demo-blog-categories.html'>Travel</a>
+              <div className='d-flex justify-content-between items-center'>
+                <h3 className='mb-4'>
+                  Related<span> Posts</span>
+                </h3>
+                {relatedLoad && <Loading />}
+              </div>
+              <div className='row posts-md mt-2'>
+                {relatedPosts?.posts.map((post, i) => (
+                  <div className='col-lg-3 col-sm-6'>
+                    <article className='entry'>
+                      <div className='entry-title title-sm text-start'>
+                        <div className='entry-categories'>
+                          <a href='demo-blog-categories.html'>
+                            {post?.category}
+                          </a>
+                        </div>
+                        <h3>
+                          <a
+                            href='#'
+                            className='color-underline stretched-link'
+                          >
+                            {post?.title}
+                          </a>
+                        </h3>
                       </div>
-                      <h3>
-                        <a href='#' className='color-underline stretched-link'>
-                          The Best Destinations in Asia for Solo Travel
-                        </a>
-                      </h3>
-                    </div>
-                    <div className='entry-meta'>
-                      <ul>
-                        <li>
-                          <a href='#'>Mar 11, 2016</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </article>
-                </div>
-                <div className='col-lg-3 col-sm-6'>
-                  <article className='entry'>
-                    <div className='entry-image'>
-                      <a href='#'>
-                        <img
-                          src='demos/blog/images/video-thumbs/2.jpg'
-                          alt='Image 3'
-                        />
-                      </a>
-                    </div>
-                    <div className='entry-title title-sm text-start'>
-                      <div className='entry-categories'>
-                        <a href='demo-blog-categories.html'>Fashion</a>
+                      <div className='entry-meta'>
+                        <ul>
+                          <li>
+                            <a href='#'>{post?.createdAt}</a>
+                          </li>
+                        </ul>
                       </div>
-                      <h3>
-                        <a href='#' className='color-underline stretched-link'>
-                          10 Trendy Fashion Instagram Profile You Need to Follow
-                        </a>
-                      </h3>
-                    </div>
-                    <div className='entry-meta'>
-                      <ul>
-                        <li>
-                          <a href='#'>Mar 11, 2016</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </article>
-                </div>
-                <div className='col-lg-3 col-sm-6'>
-                  <article className='entry'>
-                    <div className='entry-image'>
-                      <a href='#'>
-                        <img
-                          src='demos/blog/images/video-thumbs/3.jpg'
-                          alt='Image 3'
-                        />
-                      </a>
-                    </div>
-                    <div className='entry-title title-sm text-start'>
-                      <div className='entry-categories'>
-                        <a href='demo-blog-categories.html'>Travel</a>
-                      </div>
-                      <h3>
-                        <a href='#' className='color-underline stretched-link'>
-                          23 Top Travel Bloggers Who Inspire Us To Travel
-                        </a>
-                      </h3>
-                    </div>
-                    <div className='entry-meta'>
-                      <ul>
-                        <li>
-                          <a href='#'>Mar 11, 2016</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </article>
-                </div>
-
-                <div className='col-lg-3 col-sm-6'>
-                  <article className='entry'>
-                    <div className='entry-image'>
-                      <a href='#'>
-                        <img
-                          src='demos/blog/images/video-thumbs/4.jpg'
-                          alt='Image 3'
-                        />
-                      </a>
-                    </div>
-                    <div className='entry-title title-sm text-start'>
-                      <div className='entry-categories'>
-                        <a href='demo-blog-categories.html'>Travel</a>
-                      </div>
-                      <h3>
-                        <a href='#' className='color-underline stretched-link'>
-                          23 Top Travel Bloggers Who Inspire Us To Travel
-                        </a>
-                      </h3>
-                    </div>
-                    <div className='entry-meta'>
-                      <ul>
-                        <li>
-                          <a href='#'>Mar 11, 2016</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </article>
-                </div>
+                    </article>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

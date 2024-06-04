@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import AddReply from './AddReply'
 import Reply from './Reply'
+import { useSelector } from 'react-redux'
 
 const Comment = ({ comment }) => {
+  const { userInfo } = useSelector(state => state.auth)
   const [replyModal, setReplyModal] = useState(false)
 
   const toggleReplyModal = () => {
@@ -38,12 +40,14 @@ const Comment = ({ comment }) => {
 
             <p>{comment?.comment}</p>
 
-            <span
-              className='comment-reply-link cursor-pointer'
-              onClick={toggleReplyModal}
-            >
-              <i className='bi-reply-fill'></i>
-            </span>
+            {userInfo && (
+              <span
+                className='comment-reply-link cursor-pointer'
+                onClick={toggleReplyModal}
+              >
+                <i className='bi-reply-fill'></i>
+              </span>
+            )}
           </div>
 
           {replyModal ? (

@@ -20,7 +20,7 @@ const AddReply = ({ commentId, toggleReplyModal, replyModal }) => {
       const res = await addReply({
         commentId,
         data: { name: values.name, comment: values.reply }
-      })
+      }).unwrap()
       toast.success('Replied successfully', { position: 'bottom-center' })
     } catch (err) {
       toast.error(err?.data?.message || err.message, {

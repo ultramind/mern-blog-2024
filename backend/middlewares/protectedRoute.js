@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import expressAsyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 
-const protectRoute = expressAsyncHandler(async (req, res, next) => {
+const protectedRoute = expressAsyncHandler(async (req, res, next) => {
   let token
   token = req.cookies.jwt
   if (token) {
@@ -20,4 +20,4 @@ const protectRoute = expressAsyncHandler(async (req, res, next) => {
   }
 })
 
-export default protectRoute
+export default protectedRoute

@@ -16,13 +16,9 @@ const commentSchema = mongoose.Schema(
     },
     replies: [
       {
-        name: {
-          type: String,
-          required: true
-        },
-        commentId: {
-          type: Schema.Types.ObjectId,
-          required: true
+        author: {
+          id: { type: Schema.Types.ObjectId },
+          name: String
         },
         reply: {
           type: String,
