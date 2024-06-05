@@ -14,8 +14,8 @@ const postApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['posts']
     }),
     getAllPosts: builder.query({
-      query: ({ category, search, page, limit, sort }) =>
-        `${POST_URL}/query?category=${category}&page=${page}&sort=${sort}&limit=${limit}&search=${search}`,
+      query: ({ category, search, page, limit, sort, status }) =>
+        `${POST_URL}/query?category=${category}&page=${page}&sort=${sort}&limit=${limit}&search=${search}&status=${status}`,
       providesTags: ['posts']
     }),
     getPost: builder.query({
@@ -43,6 +43,13 @@ const postApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE'
       }),
       invalidatesTags: ['posts']
+    }),
+    changePostStatus: builder.mutation({
+      query: postId => ({
+        url: `${POST_URL}/${postId}/change-status`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['posts']
     })
   })
 })
@@ -53,5 +60,6 @@ export const {
   useGetPostQuery,
   useEditPostMutation,
   useDeletePostMutation,
-  useLikePostMutation
+  useLikePostMutation,
+  useChangePostStatusMutation
 } = postApiSlice

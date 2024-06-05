@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Layout from '../Layout'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
+  useChangePostStatusMutation,
   useDeletePostMutation,
   useGetAllPostsQuery,
   useGetPostQuery,
@@ -49,6 +50,8 @@ const PostDetails = () => {
 
   const [deletePost, { isLoading: loading }] = useDeletePostMutation()
   const [likePost, { isLoading: likeLoading }] = useLikePostMutation()
+  const [changePostStatus, { isLoading: suspendLoad }] =
+    useChangePostStatusMutation()
 
   const handlePostDelete = async () => {
     try {
@@ -78,6 +81,19 @@ const PostDetails = () => {
   let hasUserLiked
   if (userInfo) {
     hasUserLiked = data?.stat?.numOfLikes.includes(userInfo._id)
+  }
+
+  // admin functionality
+  const handleChangePostStatus = async () => {
+    try {
+      const res = await changePostStatus(data?._id).unwrap()
+      toast.success('Post suspended successful', { position: 'bottom-center' })
+      navigate('/')
+    } catch (err) {
+      toast.error(err?.data?.message || err.message, {
+        position: 'bottom-center'
+      })
+    }
   }
 
   return (
@@ -169,10 +185,14 @@ const PostDetails = () => {
                           </li>
                         </>
                       )}
-                      {userInfo && userInfo._id === data?.author?.id && (
+                      {userInfo && userInfo?.isAdmin === true && (
                         <>
-                          <li className='d-flex justify-content-center align-items-center gap-2'>
-                            <Link to={`/post/${data?.slug}/edit`}>
+                          <li
+                            onClick={handleChangePostStatus}
+                            style={{ cursor: 'pointer' }}
+                            className='d-flex justify-content-center align-items-center gap-2'
+                          >
+                            <span>
                               Suspend
                               <CiSquareRemove
                                 size={25}
@@ -181,7 +201,7 @@ const PostDetails = () => {
                                   marginLeft: '10px'
                                 }}
                               />
-                            </Link>
+                            </span>
                           </li>
 
                           <li className='d-flex justify-content-center align-items-center gap-2'>
@@ -195,7 +215,7 @@ const PostDetails = () => {
                       )}
 
                       <li className='d-flex justify-content-center align-items-center gap-2'>
-                        {loading || (likeLoading && <Loading />)}
+                        {loading || likeLoading || (suspendLoad && <Loading />)}
                       </li>
                     </ul>
                   </div>
