@@ -1,6 +1,24 @@
 import React from 'react'
+import { useDeleteReplyMutation } from '../../redux/slices/commentApiSlice'
+import { toast } from 'react-toastify'
+import Loading from '../Loading'
+import { useSelector } from 'react-redux'
 
-const Reply = ({ reply }) => {
+const Reply = ({ commentId, reply }) => {
+  const { userInfo } = useSelector(state => state.auth)
+  const query = { commentId, replyId: reply._id }
+  const [deleteReply, { isLoading }] = useDeleteReplyMutation()
+
+  const handleDeleteReply = async () => {
+    try {
+      await deleteReply(query).unwrap()
+      toast.success('Reply deleted', { position: 'bottom-center' })
+    } catch (err) {
+      toast.error(err?.data?.message || err.message, {
+        position: 'bottom-center'
+      })
+    }
+  }
   return (
     <li
       className='comment byuser comment-author-_smcl_admin odd alt depth-2'
@@ -24,7 +42,7 @@ const Reply = ({ reply }) => {
         <div className='comment-content'>
           <div className='comment-author'>
             <a href='#' rel='external nofollow' className='url'>
-              {reply?.name}
+              {reply?.author?.name}
             </a>
             <span>
               <a href='#' title='Permalink to this comment'>
@@ -32,12 +50,17 @@ const Reply = ({ reply }) => {
               </a>
             </span>
           </div>
-
           <p>{reply?.reply}</p>
-
-          <a className='comment-reply-link' href='#'>
-            <i className='bi-trash-fill'></i>
-          </a>
+          {isLoading && <Loading size={'20px'} />}{' '}
+          {userInfo._id === reply?.author.id ? (
+            <span
+              className='comment-reply-link'
+              style={{ cursor: 'pointer' }}
+              onClick={handleDeleteReply}
+            >
+              <i className='bi-trash-fill'></i>
+            </span>
+          ) : null}
         </div>
 
         <div className='clear'></div>

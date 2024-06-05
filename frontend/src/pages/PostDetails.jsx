@@ -23,12 +23,14 @@ import Loading from '../components/Loading'
 import { FaShareAlt } from 'react-icons/fa'
 import { FcLike } from 'react-icons/fc'
 import Posts from '../components/postContainer/Posts'
+import { formatDate } from '../utils/utils'
 
 const PostDetails = () => {
   const { userInfo } = useSelector(state => state.auth)
   const navigate = useNavigate()
   const { slug } = useParams()
   const { data, isLoading } = useGetPostQuery(slug)
+  const date = formatDate(data?.createdAt)
 
   const [query, setQuery] = useState({
     category: data?.category,
@@ -43,7 +45,6 @@ const PostDetails = () => {
     isLoading: relatedLoad,
     isSuccess
   } = useGetAllPostsQuery(query)
-  console.log(query)
 
   const [deletePost, { isLoading: loading }] = useDeletePostMutation()
   const [likePost, { isLoading: likeLoading }] = useLikePostMutation()
@@ -101,7 +102,7 @@ const PostDetails = () => {
                 <div className='d-flex justify-content-center mt-2'>
                   <div className='entry-meta'>
                     <ul>
-                      <li>{data?.createdAt}</li>
+                      <li>{date}</li>
                       <li>
                         By{' '}
                         <a href='#'>

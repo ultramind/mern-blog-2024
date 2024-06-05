@@ -61,7 +61,7 @@ const Comment = ({ comment }) => {
         {/* REPLY */}
         <ul className='children'>
           {comment?.replies.map((reply, i) => (
-            <Reply key={i} reply={reply} />
+            <Reply key={i} commentId={comment?._id} reply={reply} />
           ))}
         </ul>
       </li>

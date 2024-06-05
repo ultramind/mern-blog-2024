@@ -23,6 +23,13 @@ const commentApiSlice = apiSlice.injectEndpoints({
         body: data
       }),
       invalidatesTags: ['comment']
+    }),
+    deleteReply: builder.mutation({
+      query: ({ commentId, replyId }) => ({
+        url: `${COMMENT_URL}/${commentId}/reply/${replyId}/delete`,
+        method: 'PUT'
+      }),
+      invalidatesTags: ['comment']
     })
   })
 })
@@ -30,5 +37,6 @@ const commentApiSlice = apiSlice.injectEndpoints({
 export const {
   useAddCommentMutation,
   useGetAllCommentQuery,
-  useAddReplyMutation
+  useAddReplyMutation,
+  useDeleteReplyMutation
 } = commentApiSlice

@@ -1,6 +1,12 @@
 import ReactLoading from 'react-loading'
-function Loading () {
-  return <ReactLoading type='spin' color='#ffffff' style={{ width: '30px' }} />
+function Loading ({ size }) {
+  return (
+    <ReactLoading
+      type='spin'
+      color='#ffffff'
+      style={{ width: `${size || '30px'}` }}
+    />
+  )
 }
 
 export default Loading
