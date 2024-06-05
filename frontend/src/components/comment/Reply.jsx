@@ -3,6 +3,7 @@ import { useDeleteReplyMutation } from '../../redux/slices/commentApiSlice'
 import { toast } from 'react-toastify'
 import Loading from '../Loading'
 import { useSelector } from 'react-redux'
+import { formatDate, formatDateTime } from '../../utils/utils'
 
 const Reply = ({ commentId, reply }) => {
   const { userInfo } = useSelector(state => state.auth)
@@ -46,7 +47,7 @@ const Reply = ({ commentId, reply }) => {
             </a>
             <span>
               <a href='#' title='Permalink to this comment'>
-                {reply?.createdAt}
+                {formatDateTime(reply?.createdAt)}
               </a>
             </span>
           </div>

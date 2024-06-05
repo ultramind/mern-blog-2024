@@ -24,6 +24,7 @@ import { FaShareAlt } from 'react-icons/fa'
 import { FcLike } from 'react-icons/fc'
 import Posts from '../components/postContainer/Posts'
 import { formatDate } from '../utils/utils'
+import { CiSquareRemove } from 'react-icons/ci'
 
 const PostDetails = () => {
   const { userInfo } = useSelector(state => state.auth)
@@ -155,6 +156,30 @@ const PostDetails = () => {
                               <FaRegEdit
                                 size={25}
                                 style={{ cursor: 'pointer' }}
+                              />
+                            </Link>
+                          </li>
+
+                          <li className='d-flex justify-content-center align-items-center gap-2'>
+                            <MdDelete
+                              size={25}
+                              style={{ cursor: 'pointer' }}
+                              onClick={handlePostDelete}
+                            />
+                          </li>
+                        </>
+                      )}
+                      {userInfo && userInfo._id === data?.author?.id && (
+                        <>
+                          <li className='d-flex justify-content-center align-items-center gap-2'>
+                            <Link to={`/post/${data?.slug}/edit`}>
+                              Suspend
+                              <CiSquareRemove
+                                size={25}
+                                style={{
+                                  cursor: 'pointer',
+                                  marginLeft: '10px'
+                                }}
                               />
                             </Link>
                           </li>

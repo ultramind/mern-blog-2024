@@ -1,6 +1,8 @@
 import React from 'react'
 import { useGetAllPostsQuery } from '../redux/slices/postApiSlice'
 import { Link } from 'react-router-dom'
+import PostBody from './postContainer/PostBody'
+import { formatDateTime } from '../utils/utils'
 
 const Hero = ({ post }) => {
   const postBody = post?.body.substr(0, 300)
@@ -15,7 +17,7 @@ const Hero = ({ post }) => {
         <div className='entry-title'>
           <div className='entry-categories'>
             <Link to={`/post/category/${post?.category}`}>
-              {post?.category} sdjskdadddd
+              {post?.category}
             </Link>
           </div>
           <h3>
@@ -30,12 +32,9 @@ const Hero = ({ post }) => {
         <div className='entry-meta'>
           <ul>
             <li>
-              <a href='#'>{post?.createdAt}</a>
+              <a href='#'>{formatDateTime(post?.createdAt)}</a>
             </li>
           </ul>
-        </div>
-        <div className='entry-content'>
-          <p>{postBody}...</p>
         </div>
       </article>
     </div>

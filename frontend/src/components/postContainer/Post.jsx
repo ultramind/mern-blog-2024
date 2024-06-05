@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PostBody from './PostBody'
+import { formatDate } from '../../utils/utils'
 
 const Post = ({ post }) => {
   const body = post?.body.substr(0, 70)
@@ -14,25 +15,25 @@ const Post = ({ post }) => {
             </Link>
           </div>
           <h3>
-            <a
+            <Link
               to={`/post/${post?.slug}`}
               className='color-underline stretched-link'
             >
               {post?.title}
-            </a>
+            </Link>
           </h3>
         </div>
         <div className='entry-meta'>
           <ul>
-            <li>{post?.createdAt}</li>
+            <li>{formatDate(post?.createdAt)}</li>
           </ul>
         </div>
         <div className='entry-content mt-3'>
           {/* <p className='m-0'>{body}...</p> */}
-          <PostBody postBody={post?.body} />
-          <Link to={`/post/${post?.slug}`} className='more-link mt-2'>
+          {/* <PostBody postBody={post?.body} /> */}
+          {/* <Link to={`/post/${post?.slug}`} className='more-link mt-2'>
             Read more
-          </Link>
+          </Link> */}
         </div>
       </article>
     </div>

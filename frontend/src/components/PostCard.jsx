@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { formatDate } from '../utils/utils'
 
 const PostCard = ({ post }) => {
   return (
@@ -21,7 +22,7 @@ const PostCard = ({ post }) => {
         <div className='entry-meta'>
           <ul>
             <li>
-              <a href='#'>{post?.createdAt}</a>
+              <a href='#'>{formatDate(post?.createdAt)}</a>
             </li>
           </ul>
         </div>

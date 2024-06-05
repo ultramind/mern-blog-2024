@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import AddReply from './AddReply'
 import Reply from './Reply'
 import { useSelector } from 'react-redux'
+import { formatDate, formatDateTime } from '../../utils/utils'
 
 const Comment = ({ comment }) => {
   const { userInfo } = useSelector(state => state.auth)
@@ -33,7 +34,7 @@ const Comment = ({ comment }) => {
               {comment?.name}
               <span>
                 <a href='#' title='Permalink to this comment'>
-                  {comment?.createdAt}
+                  {formatDateTime(comment?.createdAt)}
                 </a>
               </span>
             </div>
@@ -60,7 +61,7 @@ const Comment = ({ comment }) => {
         </div>
         {/* REPLY */}
         <ul className='children'>
-          {comment?.replies.map((reply, i) => (
+          {comment?.replies?.slice(0, 3).map((reply, i) => (
             <Reply key={i} commentId={comment?._id} reply={reply} />
           ))}
         </ul>
