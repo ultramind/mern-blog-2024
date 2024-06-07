@@ -26,6 +26,7 @@ import { FcLike } from 'react-icons/fc'
 import Posts from '../components/postContainer/Posts'
 import { formatDate } from '../utils/utils'
 import { CiSquareRemove } from 'react-icons/ci'
+import { ImCheckboxChecked } from 'react-icons/im'
 
 const PostDetails = () => {
   const { userInfo } = useSelector(state => state.auth)
@@ -87,7 +88,9 @@ const PostDetails = () => {
   const handleChangePostStatus = async () => {
     try {
       const res = await changePostStatus(data?._id).unwrap()
-      toast.success('Post suspended successful', { position: 'bottom-center' })
+      toast.success('Post status changed successful', {
+        position: 'bottom-center'
+      })
       navigate('/')
     } catch (err) {
       toast.error(err?.data?.message || err.message, {
@@ -187,22 +190,48 @@ const PostDetails = () => {
                       )}
                       {userInfo && userInfo?.isAdmin === true && (
                         <>
-                          <li
-                            onClick={handleChangePostStatus}
-                            style={{ cursor: 'pointer' }}
-                            className='d-flex justify-content-center align-items-center gap-2'
-                          >
-                            <span>
-                              Suspend
-                              <CiSquareRemove
-                                size={25}
-                                style={{
-                                  cursor: 'pointer',
-                                  marginLeft: '10px'
-                                }}
-                              />
-                            </span>
-                          </li>
+                          {data?.status === 'published' && (
+                            <li
+                              onClick={handleChangePostStatus}
+                              style={{ cursor: 'pointer' }}
+                              className='d-flex bg-danger p-2 rounded-2 bold justify-content-center align-items-center gap-2'
+                            >
+                              <span
+                                className='text-white'
+                                style={{ fontWeight: 'bold' }}
+                              >
+                                Suspend
+                                <CiSquareRemove
+                                  size={25}
+                                  style={{
+                                    cursor: 'pointer',
+                                    marginLeft: '10px'
+                                  }}
+                                />
+                              </span>
+                            </li>
+                          )}
+                          {data?.status === 'suspended' && (
+                            <li
+                              onClick={handleChangePostStatus}
+                              style={{ cursor: 'pointer' }}
+                              className='d-flex bg-success p-2 rounded-2 bold justify-content-center align-items-center gap-2'
+                            >
+                              <span
+                                className='text-white'
+                                style={{ fontWeight: 'bold' }}
+                              >
+                                Publish
+                                <ImCheckboxChecked
+                                  size={25}
+                                  style={{
+                                    cursor: 'pointer',
+                                    marginLeft: '10px'
+                                  }}
+                                />
+                              </span>
+                            </li>
+                          )}
 
                           <li className='d-flex justify-content-center align-items-center gap-2'>
                             <MdDelete

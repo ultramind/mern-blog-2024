@@ -48,7 +48,12 @@ const CategoryList = ({ query, setQuery, isLoading: postLoading }) => {
             >
               <span
                 onClick={() =>
-                  setQuery({ ...query, category: cat?.category, search: '' })
+                  setQuery({
+                    ...query,
+                    category: cat?.category,
+                    search: '',
+                    status: 'published'
+                  })
                 }
                 className='nav-link'
                 href='#'
@@ -58,6 +63,19 @@ const CategoryList = ({ query, setQuery, isLoading: postLoading }) => {
               </span>
             </li>
           ))}
+          {/* admin operation */}
+          <li className={`nav-item ${query.status == 'suspended' && 'active'}`}>
+            <span
+              onClick={() =>
+                setQuery({ ...query, status: 'suspended', search: '' })
+              }
+              className='nav-link'
+              href='#'
+              style={{ cursor: 'pointer' }}
+            >
+              {'Suspended Posts' || <Skeleton />}
+            </span>
+          </li>
         </ul>
       </div>
     </div>

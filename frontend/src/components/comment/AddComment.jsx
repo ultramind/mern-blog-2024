@@ -88,7 +88,7 @@ const AddComment = ({ post }) => {
             value={values.comment}
             onChange={handleChange}
             cols='58'
-            rows='7'
+            rows='4'
             placeholder='Your comment here...'
             tabIndex='4'
             className='form-control'
