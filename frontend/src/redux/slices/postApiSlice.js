@@ -13,9 +13,12 @@ const postApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['posts']
     }),
+    getFeaturedPost: builder.query({
+      query: () => `${POST_URL}/featured`
+    }),
     getAllPosts: builder.query({
-      query: ({ category, search, page, limit, sort, status }) =>
-        `${POST_URL}/query?category=${category}&page=${page}&sort=${sort}&limit=${limit}&search=${search}&status=${status}`,
+      query: ({ category, search, page, limit, sort, status, author }) =>
+        `${POST_URL}/query?category=${category}&page=${page}&sort=${sort}&limit=${limit}&search=${search}&status=${status}&author=${author}`,
       providesTags: ['posts']
     }),
     getPost: builder.query({
@@ -47,7 +50,14 @@ const postApiSlice = apiSlice.injectEndpoints({
     changePostStatus: builder.mutation({
       query: postId => ({
         url: `${POST_URL}/${postId}/change-status`,
-        method: 'PUT',
+        method: 'PUT'
+      }),
+      invalidatesTags: ['posts']
+    }),
+    makeFeaturedPost: builder.mutation({
+      query: postId => ({
+        url: `${POST_URL}/${postId}/featured`,
+        method: 'PUT'
       }),
       invalidatesTags: ['posts']
     })
@@ -61,5 +71,7 @@ export const {
   useEditPostMutation,
   useDeletePostMutation,
   useLikePostMutation,
-  useChangePostStatusMutation
+  useChangePostStatusMutation,
+  useGetFeaturedPostQuery,
+  useMakeFeaturedPostMutation
 } = postApiSlice

@@ -26,8 +26,7 @@ const Home = () => {
         <div className='container'>
           <div className='row border-between'>
             {/* Hero section */}
-            {isLoading && <HeroSkeleton />}
-            {data && <Hero post={data?.posts[0]} />}
+            <Hero />
 
             {/* Aside Section */}
             <Aside posts={newPosts} isLoading={isLoading} />

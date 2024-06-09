@@ -5,8 +5,10 @@ import {
   useChangePostStatusMutation,
   useDeletePostMutation,
   useGetAllPostsQuery,
+  useGetFeaturedPostQuery,
   useGetPostQuery,
-  useLikePostMutation
+  useLikePostMutation,
+  useMakeFeaturedPostMutation
 } from '../redux/slices/postApiSlice'
 import Skeleton from 'react-loading-skeleton'
 import CommentSection from '../components/comment/CommentSection'
@@ -27,9 +29,12 @@ import Posts from '../components/postContainer/Posts'
 import { formatDate } from '../utils/utils'
 import { CiSquareRemove } from 'react-icons/ci'
 import { ImCheckboxChecked } from 'react-icons/im'
+import { HiHome } from 'react-icons/hi2'
+import { set } from 'mongoose'
 
 const PostDetails = () => {
   const { userInfo } = useSelector(state => state.auth)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const { slug } = useParams()
   const { data, isLoading } = useGetPostQuery(slug)
@@ -49,10 +54,12 @@ const PostDetails = () => {
     isSuccess
   } = useGetAllPostsQuery(query)
 
-  const [deletePost, { isLoading: loading }] = useDeletePostMutation()
+  const [deletePost, { isLoading: deleteLoading }] = useDeletePostMutation()
   const [likePost, { isLoading: likeLoading }] = useLikePostMutation()
   const [changePostStatus, { isLoading: suspendLoad }] =
     useChangePostStatusMutation()
+  const [makeFeaturedPost, { isLoading: featuredLoading }] =
+    useMakeFeaturedPostMutation()
 
   const handlePostDelete = async () => {
     try {
@@ -89,6 +96,20 @@ const PostDetails = () => {
     try {
       const res = await changePostStatus(data?._id).unwrap()
       toast.success('Post status changed successful', {
+        position: 'bottom-center'
+      })
+      navigate('/')
+    } catch (err) {
+      toast.error(err?.data?.message || err.message, {
+        position: 'bottom-center'
+      })
+    }
+  }
+
+  const handleFeaturedPost = async () => {
+    try {
+      const res = await makeFeaturedPost(data?._id).unwrap()
+      toast.success('Featured Post approved', {
         position: 'bottom-center'
       })
       navigate('/')
@@ -168,7 +189,7 @@ const PostDetails = () => {
                           <FaShareAlt size={25} style={{ cursor: 'pointer' }} />
                         </Link>
                       </li>
-                      {userInfo && userInfo._id === data?.author?.id && (
+                      {userInfo?._id === data?.author?.id && (
                         <>
                           <li className='d-flex justify-content-center align-items-center gap-2'>
                             <Link to={`/post/${data?.slug}/edit`}>
@@ -178,38 +199,47 @@ const PostDetails = () => {
                               />
                             </Link>
                           </li>
-
-                          <li className='d-flex justify-content-center align-items-center gap-2'>
-                            <MdDelete
-                              size={25}
-                              style={{ cursor: 'pointer' }}
-                              onClick={handlePostDelete}
-                            />
-                          </li>
                         </>
                       )}
+
+                      {data?.featured === false &&
+                        userInfo &&
+                        userInfo?.isAdmin === true && (
+                          <>
+                            <li
+                              onClick={handleFeaturedPost}
+                              className='d-flex justify-content-center align-items-center gap-2'
+                            >
+                              Featured
+                              <HiHome size={25} style={{ cursor: 'pointer' }} />
+                            </li>
+                          </>
+                        )}
+
                       {userInfo && userInfo?.isAdmin === true && (
                         <>
                           {data?.status === 'published' && (
-                            <li
-                              onClick={handleChangePostStatus}
-                              style={{ cursor: 'pointer' }}
-                              className='d-flex bg-danger p-2 rounded-2 bold justify-content-center align-items-center gap-2'
-                            >
-                              <span
-                                className='text-white'
-                                style={{ fontWeight: 'bold' }}
+                            <>
+                              <li
+                                onClick={handleChangePostStatus}
+                                style={{ cursor: 'pointer' }}
+                                className='d-flex bg-danger p-2 rounded-2 bold justify-content-center align-items-center gap-2'
                               >
-                                Suspend
-                                <CiSquareRemove
-                                  size={25}
-                                  style={{
-                                    cursor: 'pointer',
-                                    marginLeft: '10px'
-                                  }}
-                                />
-                              </span>
-                            </li>
+                                <span
+                                  className='text-white'
+                                  style={{ fontWeight: 'bold' }}
+                                >
+                                  Suspend
+                                  <CiSquareRemove
+                                    size={25}
+                                    style={{
+                                      cursor: 'pointer',
+                                      marginLeft: '10px'
+                                    }}
+                                  />
+                                </span>
+                              </li>
+                            </>
                           )}
                           {data?.status === 'suspended' && (
                             <li
@@ -232,19 +262,24 @@ const PostDetails = () => {
                               </span>
                             </li>
                           )}
-
-                          <li className='d-flex justify-content-center align-items-center gap-2'>
-                            <MdDelete
-                              size={25}
-                              style={{ cursor: 'pointer' }}
-                              onClick={handlePostDelete}
-                            />
-                          </li>
                         </>
                       )}
+                      {userInfo?._id === data?.author?.id ||
+                      userInfo?.isAdmin === true ? (
+                        <li className='d-flex justify-content-center align-items-center gap-2'>
+                          <MdDelete
+                            size={25}
+                            style={{ cursor: 'pointer' }}
+                            onClick={handlePostDelete}
+                          />
+                        </li>
+                      ) : null}
 
                       <li className='d-flex justify-content-center align-items-center gap-2'>
-                        {loading || likeLoading || (suspendLoad && <Loading />)}
+                        {deleteLoading && <Loading />}
+                        {featuredLoading && <Loading />}
+                        {suspendLoad && <Loading />}
+                        {likeLoading && <Loading />}
                       </li>
                     </ul>
                   </div>

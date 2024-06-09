@@ -11,6 +11,7 @@ import PostDetails from './pages/PostDetails'
 import PostByCategory from './pages/PostByCategory'
 import ProtectedRoute from './utils/ProtectedRoute'
 import EditPost from './pages/EditPost'
+import AuthorPage from './pages/AuthorPage'
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/post/:slug' element={<PostDetails />} />
+      <Route path='/post/author/:author' element={<AuthorPage />} />
       <Route path='/posts/category' element={<PostByCategory />} />
       {/* <Route path='/posts' element={<PostByCategory />} /> */}
       {/* Protected route */}
