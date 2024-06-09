@@ -15,7 +15,8 @@ const Home = () => {
     page: 1,
     limit: 10,
     sort: 'desc',
-    status: 'published'
+    status: 'published',
+    author: ''
   })
   const { data, isLoading, isSuccess } = useGetAllPostsQuery(query)
   const newPosts = data?.posts?.slice(0, 4)

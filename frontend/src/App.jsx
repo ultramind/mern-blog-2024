@@ -49,14 +49,7 @@ const App = () => {
             </Layout>
           }
         />
-        <Route
-          path='/profile'
-          element={
-            <Layout>
-              <Profile />
-            </Layout>
-          }
-        />
+        <Route path='/profile' element={<Profile />} />
       </Route>
     </Routes>
   )

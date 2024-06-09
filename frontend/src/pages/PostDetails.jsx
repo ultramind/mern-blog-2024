@@ -146,10 +146,10 @@ const PostDetails = () => {
                       <li>{date}</li>
                       <li>
                         By{' '}
-                        <a href='#'>
+                        <Link to={`/post/author/${data?.author?.id}`}>
                           {data?.author.firstname || <Skeleton />}{' '}
                           {data?.author.lastname}
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                     {/* CTA actions */}

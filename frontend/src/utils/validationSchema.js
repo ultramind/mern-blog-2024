@@ -29,6 +29,16 @@ export const RegisterSchema = Yup.object().shape({
   )
 })
 
+// Update Profile schema
+export const UpdateProfileSchema = Yup.object().shape({
+  firstname: Yup.string().required('Firstname required'),
+  lastname: Yup.string().required('Lastname required'),
+  email: Yup.string()
+    .email('Please type a valid email')
+    .required('Email is required'),
+  stack: Yup.string().required('Stack Required')
+});
+
 // comment schema
 export const CommentSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),

@@ -12,7 +12,7 @@ const Posts = ({ posts, isLoading, page, setPage, query, setQuery }) => {
     <div className='col-lg-9'>
       <div className='d-flex'>
         <div className='flex-grow-1'>
-          <h3>All Lifestyle Posts</h3>
+          <h3>All Posts</h3>
         </div>
         <div>
           <div className='btn-group'>
