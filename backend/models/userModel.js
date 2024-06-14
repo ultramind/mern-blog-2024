@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true
     },
+    socials: [{ name: String, url: String }],
     password: {
       type: String,
       required: true

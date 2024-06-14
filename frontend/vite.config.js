@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://api-mytechprocess.onrender.com',
+        target: 'https://api-mytechprocess.onrender',
         changeOrigin: true
       }
     }

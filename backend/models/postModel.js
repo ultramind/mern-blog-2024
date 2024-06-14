@@ -37,7 +37,7 @@ const postSchema = mongoose.Schema(
       default: 'published'
     },
     featured: {
-      type: String,
+      type: Boolean,
       default: false
     },
     imageUrl: {

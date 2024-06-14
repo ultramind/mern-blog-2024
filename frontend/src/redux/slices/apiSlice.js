@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const baseQuery = fetchBaseQuery({ baseUrl: '' })
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://api-mytechprocess.onrender.com'
+})
 
 const apiSlice = createApi({
   baseQuery,

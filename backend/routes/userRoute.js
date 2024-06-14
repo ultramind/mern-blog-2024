@@ -13,6 +13,7 @@ const router = express.Router()
 router.post('/auth', userAuth)
 router.post('/', userRegistration)
 router.post('/logout', logoutUser)
+router.get('/:userId', getUserProfile)
 router
   .route('/profile')
   .get(protectedRoute, getUserProfile)

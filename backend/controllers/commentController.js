@@ -91,5 +91,5 @@ export const deleteReply = asyncHandler(async (req, res) => {
   comment.replies = comment.replies.filter(r => r._id != replyId)
   const updateComment = await comment.save()
 
-  res.status(200).json({ message: 'Reply removed', updateComment })
+  res.status(200).json(updateComment)
 })

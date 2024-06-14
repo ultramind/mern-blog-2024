@@ -17,6 +17,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // send form data
 app.use(cookieParser())
 
+// cors
+app.use(
+  cors({
+    origin: '*',
+    Credential: true
+  })
+)
+
 // dbConnection
 connectDB()
 

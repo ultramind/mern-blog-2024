@@ -68,8 +68,16 @@ export const addPost = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc fot the featured
+// route GET => /api/posts/featured
+// access public routes
+export const getFeaturedPost = asyncHandler(async (req, res) => {
+  const post = await Post.findOne({ featured: true })
+  res.status(200).json(post)
+})
+
 // @desc fot the all posts
-// route GET => /api/posts
+// route GET => /api/posts……=
 // access public routes
 export const getAllPosts = asyncHandler(async (req, res) => {
   const page = Number(req.query.page) || PAGE
@@ -138,6 +146,8 @@ export const getPostsByFilter = asyncHandler(async (req, res) => {
   const page = Number(req.query.page) || PAGE
   const limit = Number(req.query.limit) || LIMIT_PAGE
   const search = req.query.search || ''
+  const authorId = req.query.author || ''
+  const statusValue = req.query.status || 'published'
   if (search) {
     query.title = { $regex: search, $options: 'i' }
   }
@@ -156,6 +166,13 @@ export const getPostsByFilter = asyncHandler(async (req, res) => {
     sortQuery = { _id: -1 }
   }
 
+  if (authorId !== '') {
+    query = { ...query, 'author.id': authorId }
+  }
+
+  query.status = statusValue
+
+  // res.status(200).json(query)
   const posts = await Post.find(query).sort(sortQuery).skip(skip).limit(limit)
 
   if (!posts) {
@@ -234,6 +251,32 @@ export const editPost = asyncHandler(async (req, res) => {
   res.status(200).json(updatedPost)
 })
 
+export const changePostStatus = asyncHandler(async (req, res) => {
+  const { postId } = req.params
+
+  const post = await Post.findOne({ _id: postId })
+  if (!post) {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+
+  let statusValue
+  if (post.status == 'published') {
+    statusValue = 'suspended'
+  } else {
+    statusValue = 'published'
+  }
+
+  const updatedPost = await Post.findOneAndUpdate(
+    { _id: postId },
+    {
+      status: statusValue
+    },
+    { new: true }
+  )
+  res.status(200).json(updatedPost)
+})
+
 export const deletePost = asyncHandler(async (req, res) => {
   const { postId } = req.params
 
@@ -249,4 +292,25 @@ export const deletePost = asyncHandler(async (req, res) => {
 
   const deletedPost = await Post.deleteOne({ _id: postId })
   res.status(200).json(deletedPost)
+})
+
+// featured
+export const featuredPost = asyncHandler(async (req, res) => {
+  const { postId } = req.params
+
+  const post = await Post.findOne({ _id: postId })
+  if (!post) {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+
+  // update every post to false
+  await Post.updateMany({}, { featured: false })
+
+  const featuredPost = await Post.findOneAndUpdate(
+    { _id: postId },
+    { featured: true },
+    { new: true }
+  )
+  res.status(200).json(featuredPost)
 })

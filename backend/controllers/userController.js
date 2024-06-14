@@ -79,13 +79,19 @@ const logoutUser = asyncHandler(async (req, res) => {
 // route GET => /api/users/profile
 // access private routes
 const getUserProfile = asyncHandler(async (req, res) => {
+  const { userId } = req.params
+  const user = await User.findOne({ _id: userId })
+  if (!user) {
+    res.status(404)
+    throw new Error('User note found')
+  }
   res.status(200).json({
-    _id: req.user._id,
-    firstname: req.user.firstname,
-    lastname: req.user.lastname,
-    email: req.user.email,
-    stack: req.user.stack,
-    isAdmin: req.user.isAdmin
+    _id: user._id,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    email: user.email,
+    stack: user.stack,
+    isAdmin: user.isAdmin
   })
 })
 
@@ -93,25 +99,39 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // route PUT => /api/users/profile
 // access private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const { firstname, lastname, email, password } = req.body
+  const { firstname, lastname, email, stack, type, name, url } = req.body
   const user = await User.findById(req.user._id)
+  let updatedUser
 
-  if (user) {
+  if (!user) {
+    res.status(404)
+    throw new Error('User not found')
+  }
+
+  if (type === 'bio') {
     user.firstname = firstname || user.firstname
     user.lastname = lastname || user.lastname
     user.email = email || user.email
-    // check if password is inlcuded in body
-    if (password) {
-      user.password = password || user.password
-    }
+    user.stack = stack || user.stack
+
+    updatedUser = await user.save()
   }
-  const updatedUser = await user.save()
+
+  // for updating social ultrasonic
+  if (type === 'social') {
+    
+    user.socials.push({ name, url })
+    updatedUser = await user.save()
+  }
+
   res.status(200).json({
     _id: updatedUser._id,
     firstname: updatedUser.firstname,
     lastname: updatedUser.lastname,
     email: updatedUser.email,
-    isAdmin: updatedUser.isAdmin
+    stack: updatedUser.stack,
+    isAdmin: user.isAdmin,
+    socials: user.socials
   })
 })
 
@@ -122,3 +142,4 @@ export {
   updateUserProfile,
   logoutUser
 }
+
