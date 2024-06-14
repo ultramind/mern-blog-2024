@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { UpdateProfileSchema } from '../utils/validationSchema'
-import { useUpdateProfileMutation } from '../redux/slices/userApiSlice'
+import { UpdateProfileSchema } from '../../utils/validationSchema'
+import { useUpdateProfileMutation } from '../../redux/slices/userApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { setUserCredentials } from '../redux/slices/authSlice'
+import { setUserCredentials } from '../../redux/slices/authSlice'
 import { toast } from 'react-toastify'
-import Loading from '../components/Loading'
-import { useGetAllCategoriesQuery } from '../redux/slices/categoryApiSlice'
+import Loading from '../Loading'
+import { useGetAllCategoriesQuery } from '../../redux/slices/categoryApiSlice'
 
 const UpdateProfile = () => {
   const navigate = useNavigate()
@@ -19,7 +19,8 @@ const UpdateProfile = () => {
     firstname: userInfo.firstname,
     lastname: userInfo.lastname,
     email: userInfo.email,
-    stack: userInfo.stack
+    stack: userInfo.stack,
+    type: 'bio'
   })
 
   const { data: categories } = useGetAllCategoriesQuery()
@@ -29,7 +30,6 @@ const UpdateProfile = () => {
   const handleUpdateProfileSubmit = async values => {
     try {
       const res = await updateProfile(values).unwrap()
-      console.log(res)
       dispatch(setUserCredentials({ ...res }))
       toast.success('Your profile updated', { position: 'bottom-center' })
     } catch (err) {

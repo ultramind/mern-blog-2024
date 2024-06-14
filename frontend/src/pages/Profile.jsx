@@ -11,9 +11,10 @@ import Layout from '../Layout'
 import { Link, useParams } from 'react-router-dom'
 import { useGetUserQuery } from '../redux/slices/userApiSlice'
 import { useSelector } from 'react-redux'
-import ProfileCard from '../components/ProfileCard'
-import ProfileCardMin from '../components/ProfileCardMin'
-import UpdateProfile from '../components/UpdateProfile'
+import ProfileCard from '../components/profile/ProfileCard'
+import ProfileCardMin from '../components/profile/ProfileCardMin'
+import UpdateProfile from '../components/profile/UpdateProfile'
+import SocialCard from '../components/profile/SocialsCard'
 
 const Profile = () => {
   return (
@@ -33,7 +34,8 @@ const Profile = () => {
                 </div>
 
                 <div className='col-lg-8'>
-                  <UpdateProfile />
+                  {/* <UpdateProfile /> */}
+                  <SocialCard />
                 </div>
               </div>
             </div>

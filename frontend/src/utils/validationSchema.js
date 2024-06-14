@@ -45,6 +45,13 @@ export const CommentSchema = Yup.object().shape({
   comment: Yup.string().required('Comment required')
 })
 
+// Socials schema
+export const SocialSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  url: Yup.string().required('Url required')
+})
+
+
 // reply schema
 export const ReplySchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),

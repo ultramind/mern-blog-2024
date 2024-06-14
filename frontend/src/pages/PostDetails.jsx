@@ -30,7 +30,6 @@ import { formatDate } from '../utils/utils'
 import { CiSquareRemove } from 'react-icons/ci'
 import { ImCheckboxChecked } from 'react-icons/im'
 import { HiHome } from 'react-icons/hi2'
-import { set } from 'mongoose'
 
 const PostDetails = () => {
   const { userInfo } = useSelector(state => state.auth)
