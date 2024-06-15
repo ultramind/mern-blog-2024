@@ -21,7 +21,7 @@ app.use(cookieParser())
 app.use(
   cors({
     origin: '*',
-    Credential: true
+    credentials: true
   })
 )
 
@@ -36,7 +36,7 @@ app.use('/api/category', categoryRoute)
 
 // root app route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Ultra Auth root page' })
+  res.status(200).json({ message: 'Welcome to mytechprocess.com' })
 })
 
 // error handling middleware
