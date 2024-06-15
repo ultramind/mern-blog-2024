@@ -21,8 +21,6 @@ const SocialCard = () => {
     type: 'social'
   })
 
-  const { data: categories } = useGetAllCategoriesQuery()
-
   const [updateProfile, { isLoading }] = useUpdateProfileMutation()
 
   const handleUpdateProfileSubmit = async values => {
@@ -50,7 +48,7 @@ const SocialCard = () => {
       <div className='w-100 section-colored rounded p-4'>
         <div className='d-flex justify-content-between items-center'>
           <h3 className='mb-4'>
-            Update<span> Profile</span>
+            Social<span> Profile</span>
           </h3>
           {isLoading && <Loading />}
         </div>
@@ -58,7 +56,7 @@ const SocialCard = () => {
         <form className='row mb-0' onSubmit={handleSubmit}>
           <div className='form-group col-12'>
             <label htmlFor='author'>Add Social</label>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', gap: '10px' }}>
               <select
                 className='form-control w-25'
                 name='name'
@@ -66,12 +64,10 @@ const SocialCard = () => {
                 onBlur={handleBlur}
                 value={values.name}
               >
-                <option value=''>Select your Stack</option>
-                {categories?.map((cat, i) => (
-                  <option value={cat.category} key={i}>
-                    {cat.category}
-                  </option>
-                ))}
+                <option value='git'>Git</option>
+                <option value='linkedin'>Linkedin</option>
+                <option value='Twitter'>Twitter</option>
+                <option value='portfolio'>Portfolio</option>
               </select>
               <input
                 type='url'
