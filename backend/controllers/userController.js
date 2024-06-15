@@ -119,7 +119,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
   // for updating social ultrasonic
   if (type === 'social') {
-    
+    // check if the social account exit
+    const ifSocialExits = user.socials.find(s => s.name === name)
+    // if (ifSocialExits == undefined) {
+    //   res.status(400)
+    //   throw new Error('Media handle already exits');
+    // }
     user.socials.push({ name, url })
     updatedUser = await user.save()
   }
@@ -142,4 +147,3 @@ export {
   updateUserProfile,
   logoutUser
 }
-
